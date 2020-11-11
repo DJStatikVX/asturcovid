@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">AsturCOVID</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_about">Acerca de...</string>
+
+    <string name="menu_title">AsturCOVID</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="SeleccioneArea">Seleccione área sanitaria:</string>
+    <string name="descripcionMapa">Mapa de Asturias organizado por áreas sanitarias</string>
+    <string name="areaSanitariaJarrio">I - Jarrio</string>
+    <string name="areaSanitariaCangas">II - Cangas Del Narcea</string>
+    <string name="areaSanitariaAviles">III - Avilés</string>
+    <string name="areaSanitariaOviedo">IV - Oviedo</string>
+    <string name="areaSanitariaGijon">V - Gijón</string>
+    <string name="areaSanitariaArriondas">VI - Arriondas</string>
+    <string name="areaSanitariaMieres">VII - Mieres</string>
+    <string name="areaSanitariaLangreo">VIII - Langreo</string>
+    <string name="hospitalsanAgustin">Hospital San Agustín del área sanitaria 3</string>
+    <string name="hospital">Hospital</string>
+    <string name="ubicacion">Ubicación</string>
+    <string name="telefono">Teléfono</string>
+    <string name="estadisticas">Estadísticas COVID-19</string>
+    <string name="numeroDeCasosTotal">Número de casos totales:</string>
+    <string name="numeroDeCasosHoy">Número de casos hoy:</string>
+    <string name="txtDatosActualizados">Datos actualizados a 3/11/2020.</string>
+</resources>
