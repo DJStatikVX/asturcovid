@@ -3,6 +3,7 @@ package es.uniovi.eii.asturcovid;
 import android.app.ActivityOptions;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private List<AreaSanitaria> listaAreasSanitarias;
 
     public static final String AREA_SANITARIA_SELECCIONADA = "area_seleccionada";
+
+    SharedPreferences sharedPreferencesMainActivity;
+
+    public static String areaPreferida = "-1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         //ListView lista = (ListView) findViewById(R.id.listaMenu);
         List<String> indice = new ArrayList<>();
         indice.add("Hello World");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, indice);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, indice);
         //lista.setAdapter(adapter);
     }
 
@@ -87,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
         listaAreasSanitarias = dataSource.getAllValorations();
 
         dataSource.close();
+
+        sharedPreferencesMainActivity =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        areaPreferida = sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
     }
 
     @Override
@@ -99,6 +109,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
+            case R.id.settings:
+                Intent intentSettingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intentSettingsActivity);
+
+                return true;
             case R.id.action_about:
                 mostrarAcercaDe();
                 return true;

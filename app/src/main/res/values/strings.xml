@@ -5,7 +5,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_about">Acerca de...</string>
+    <string name="action_about">Acerca de&#8230;</string>
 
     <string name="menu_title">AsturCOVID</string>
     <string name="menu_gallery">Gallery</string>
@@ -28,4 +28,7 @@
     <string name="numeroDeCasosTotal">Número de casos totales:</string>
     <string name="numeroDeCasosHoy">Número de casos hoy:</string>
     <string name="txtDatosActualizados">Datos actualizados a 3/11/2020.</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="settingsPreferencesCategory">Preferencias</string>
+    <string name="title_activity_settings">Ajustes</string>
 </resources>
