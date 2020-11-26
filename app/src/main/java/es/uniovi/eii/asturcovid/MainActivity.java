@@ -4,7 +4,9 @@ import android.app.ActivityOptions;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +26,13 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.preference.PreferenceManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +42,30 @@ import es.uniovi.eii.asturcovid.modelo.Hospital;
 
 public class MainActivity extends AppCompatActivity {
 
+    private class DownloadFilesTask extends AsyncTask<Void, Integer, String>{
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String mensaje;
+            try {
+                cargarAreasSanitarias();
+                mensaje = "Database actualizada";
+            }catch (Exception e){
+                mensaje = "Error en la carga de la base de datos.";
+            }
+            return mensaje;
+        }
+    }
+
     private AppBarConfiguration mAppBarConfiguration;
 
     private List<AreaSanitaria> listaAreasSanitarias;
 
     public static final String AREA_SANITARIA_SELECCIONADA = "area_seleccionada";
+
+    public static final String FECHA_ACTUALIZACION = "fecha_actualizacion";
+
+    private String fecha;
 
     SharedPreferences sharedPreferencesMainActivity;
 
@@ -85,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        cargarAreasSanitarias();
+        //cargarAreasSanitarias();
+        DownloadFilesTask task = new DownloadFilesTask();
+        task.execute();
 
         AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
         dataSource.open();
@@ -135,17 +159,24 @@ public class MainActivity extends AppCompatActivity {
         BufferedReader bufferedReader = null;
 
         try {
-            file = getAssets().open("areas_sanitarias.csv");
-            reader = new InputStreamReader(file);
+            URL url12  = new URL("https://drive.google.com/uc?export=download&id=1jvvVSSqoRYsTbDHschXUsUrtzqQhFdd6" );
+            URLConnection uc = url12.openConnection();
+
+            reader = new InputStreamReader(uc.getInputStream());
+            /////
+            //file = getAssets().open("areas_sanitarias.csv");
+            //reader = new InputStreamReader(file);
             bufferedReader = new BufferedReader(reader);
             String line = null;
 
             //Leemos la primera línea que es encabezado y por tanto no nos aporta información útil.
-            bufferedReader.readLine();
+            line = bufferedReader.readLine();
+            String[] data = line.split(";");
+            fecha = data[9];
 
             //A partir de aquí leemos a partir de la segunda línea.
             while ((line = bufferedReader.readLine()) != null) {
-                String[] data = line.split(";");
+                data = line.split(";");
                 if (data != null) { //El segundo condicional se va a cumplir siempre. Podemos quitarlo
 
                     int id = Integer.parseInt(data[0]);
@@ -194,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(MainActivity.this, AreaSanitariaActivity.class);
         intent.putExtra(AREA_SANITARIA_SELECCIONADA, area);
+        intent.putExtra(FECHA_ACTUALIZACION, fecha);
         // Transición de barrido
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
