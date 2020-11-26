@@ -28,7 +28,9 @@ public class AreaSanitariaActivity extends AppCompatActivity {
     private TextView casos_hoy;
     private ImageView imagen_hospital;
     private CollapsingToolbarLayout toolBarLayout;
+    private TextView txtDatosActualizados;
 
+    private String fechaActualizacion;
 
 
 
@@ -40,6 +42,7 @@ public class AreaSanitariaActivity extends AppCompatActivity {
         //Recepción datos como activity secundaria
         Intent intentAreaSanitaria = getIntent();
         area = intentAreaSanitaria .getParcelableExtra(MainActivity.AREA_SANITARIA_SELECCIONADA);
+        fechaActualizacion = intentAreaSanitaria.getStringExtra(MainActivity.FECHA_ACTUALIZACION);
 
         //Gestion barra de la app
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,6 +63,7 @@ public class AreaSanitariaActivity extends AppCompatActivity {
         telefono_hospital = (TextView) findViewById(R.id.telefono);
         casos_totales = (TextView) findViewById(R.id.numeroCasosTotales);
         casos_hoy = (TextView) findViewById(R.id.numeroCasosHoy);
+        txtDatosActualizados = (TextView) findViewById(R.id.txtDatosActualizados);
 
         if (area!=null) //apertura en modo consulta
             mostrarDatos(area);
@@ -92,7 +96,7 @@ public class AreaSanitariaActivity extends AppCompatActivity {
             telefono_hospital.setText("" + (long) area.getHospital().getTelefono());
             casos_totales.setText("" + (int) area.getCasos_totales());
             casos_hoy.setText("" + (int) area.getCasos_hoy());
-
+            txtDatosActualizados.setText("Datos actualizados a " + fechaActualizacion);
 
             String url = area.getHospital().getImagen_hospital();
             // Imagen de fondo

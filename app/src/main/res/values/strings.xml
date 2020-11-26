@@ -27,7 +27,6 @@
     <string name="estadisticas">Estadísticas COVID-19</string>
     <string name="numeroDeCasosTotal">Número de casos totales:</string>
     <string name="numeroDeCasosHoy">Número de casos hoy:</string>
-    <string name="txtDatosActualizados">Datos actualizados a 3/11/2020.</string>
     <string name="action_settings">Ajustes</string>
     <string name="settingsPreferencesCategory">Preferencias</string>
     <string name="title_activity_settings">Ajustes</string>
