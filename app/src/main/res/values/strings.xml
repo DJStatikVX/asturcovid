@@ -30,4 +30,6 @@
     <string name="action_settings">Ajustes</string>
     <string name="settingsPreferencesCategory">Preferencias</string>
     <string name="title_activity_settings">Ajustes</string>
+    <string name="mapa_tabitem">Mapa</string>
+    <string name="lista_tabitem">Lista Áreas</string>
 </resources>

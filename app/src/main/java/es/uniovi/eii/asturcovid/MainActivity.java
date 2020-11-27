@@ -13,12 +13,20 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TableLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,6 +34,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,6 +65,16 @@ public class MainActivity extends AppCompatActivity {
             return mensaje;
         }
     }
+    //private MapaFragment mapaFragment;
+
+    //private ListaAreasFragment listaAreasFragment;
+
+    private ViewPager viewPager;
+
+    private TabLayout tabLayout;
+
+    private TabItem mapa;
+    private TabItem listaAreas;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -101,6 +120,84 @@ public class MainActivity extends AppCompatActivity {
         indice.add("Hello World");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, indice);
         //lista.setAdapter(adapter);
+
+        viewPager = findViewById(R.id.view_pager);
+        tabLayout = findViewById(R.id.tab_layout);
+
+        mapa = findViewById(R.id.tabitem_mapa);
+        listaAreas = findViewById(R.id.tabitem_listaAreas);
+
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+
+        final ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        //mapaFragment = new MapaFragment();
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        //listaAreasFragment = new ListaAreasFragment();
+
+
+       // viewPagerAdapter.addFragment(mapaFragment, "Mapa");
+        //viewPagerAdapter.addFragment(listaAreasFragment, "Lista Áreas");
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+    }
+
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        //private List<Fragment> fragments = new ArrayList<>();
+        private int numeroDeElementos;
+        private String[] titulos = new String[]{"Mapa", "Lista Áreas"};
+
+        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+            numeroDeElementos = behavior;
+        }
+
+        /*public void addFragment(Fragment fragment, String title){
+            fragments.add(fragment);
+            fragmentTitles.add(title);
+        }*/
+        @Override
+        public CharSequence getPageTitle(int position){
+            return titulos[position];
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case 0:
+                    return new MapaFragment();
+                case 1:
+                    return new ListaAreasFragment();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return numeroDeElementos;
+        }
     }
 
     @Override

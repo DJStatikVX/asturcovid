@@ -10,9 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class ListaAreasFragment extends Fragment {
+    View root;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        root = inflater.inflate(R.layout.lista_areas_fragment, container, false);
+        return root;
     }
 }
