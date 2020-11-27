@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main">
+
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/mobile_navigation" />
+
+    <Button
+        android:id="@+id/btnAreaSanitariaGijon"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="62dp"
+        android:layout_height="27dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="5"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.322"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.55"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaNarcea"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="62dp"
+        android:layout_height="53dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="2"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.758"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaMieres"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="57dp"
+        android:layout_height="25dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="7"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.745"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaLangreo"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="59dp"
+        android:layout_height="20dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="8"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.354"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.685"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaOviedo"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="97dp"
+        android:layout_height="25dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="4"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.247"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.6"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaOviedo2"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="51dp"
+        android:layout_height="45dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="4"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.23"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.729"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaArriondas"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="94dp"
+        android:layout_height="33dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="6"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.439"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.621"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaJarrio"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="88dp"
+        android:layout_height="24dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="1"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.545"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaJarrio2"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="40dp"
+        android:layout_height="47dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="1"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.648"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaAviles"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="62dp"
+        android:layout_height="18dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="3"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.23"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.536"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/btnAreaSanitariaAviles2"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="21dp"
+        android:layout_height="15dp"
+        android:alpha="1"
+        android:onClick="clickOnItem"
+        android:tag="3"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.488"
+        android:background="@null"/>
+
+    <TextView
+        android:id="@+id/txtSeleccionaArea"
+        android:layout_width="265dp"
+        android:layout_height="73dp"
+        android:gravity="center"
+        android:text="@string/SeleccioneArea"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="@+id/imgMapa"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/imgMapa"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.151" />
+
+    <ImageView
+        android:id="@+id/imgMapa"
+        android:layout_width="364dp"
+        android:layout_height="131dp"
+        android:contentDescription="@string/descripcionMapa"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.106"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.739"
+        app:srcCompat="@drawable/mapa" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="241dp"
+        android:layout_height="194dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/borde"
+        app:columnCount="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgMapa"
+        app:layout_constraintVertical_bias="1.0"
+        app:rowCount="8">
+
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/areaSanitariaJarrio"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="0" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/areaSanitariaCangas"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="1" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/areaSanitariaAviles"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="2" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/areaSanitariaOviedo"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="3" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/areaSanitariaGijon"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="4" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/areaSanitariaArriondas"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="5" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/areaSanitariaMieres"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="6" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/areaSanitariaLangreo"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="7" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            app:layout_column="1"
+            app:layout_row="0"
+            app:srcCompat="@drawable/rojo" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            app:layout_column="1"
+            app:layout_row="1"
+            app:srcCompat="@drawable/azul_osc" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            app:layout_column="1"
+            app:layout_row="2"
+            app:srcCompat="@drawable/rosa" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            app:layout_column="1"
+            app:layout_row="3"
+            app:srcCompat="@drawable/blanco" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            app:layout_column="1"
+            app:layout_row="4"
+            app:srcCompat="@drawable/verde_claro" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            app:layout_column="1"
+            app:layout_row="5"
+            app:srcCompat="@drawable/marron" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            app:layout_column="1"
+            app:layout_row="6"
+            app:srcCompat="@drawable/amarillo" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            app:layout_column="1"
+            app:layout_row="7"
+            app:srcCompat="@drawable/rosa_fucsia" />
+    </androidx.gridlayout.widget.GridLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
