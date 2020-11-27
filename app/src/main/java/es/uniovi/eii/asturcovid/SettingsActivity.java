@@ -29,6 +29,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
 
