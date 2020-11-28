@@ -185,6 +185,7 @@
         android:layout_width="21dp"
         android:layout_height="15dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="3"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -192,8 +193,7 @@
         app:layout_constraintHorizontal_bias="0.292"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.488"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.522" />
 
     <TextView
         android:id="@+id/txtSeleccionaArea"
