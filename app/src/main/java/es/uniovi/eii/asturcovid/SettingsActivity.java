@@ -2,10 +2,12 @@ package es.uniovi.eii.asturcovid;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import es.uniovi.eii.asturcovid.R;
 
@@ -38,12 +40,12 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-/*        sharedPreferences =
+        sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
         name = sharedPreferences.getString("keyCategoria", "");
-        Log.i("Categoría", name);
+        Log.i("ID", name);
 
-        MainRecycler.filtrocategoria = name;*/
+        MainActivity.areaPreferida = name;
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

@@ -32,4 +32,6 @@
     <string name="title_activity_settings">Ajustes</string>
     <string name="mapa_tabitem">Mapa</string>
     <string name="lista_tabitem">Lista Áreas</string>
+    <string name="nombreAreaSanitaria">Área Sanitaria</string>
+    <string name="numeroAreaSanitaria">Número de Área Sanitaria</string>
 </resources>

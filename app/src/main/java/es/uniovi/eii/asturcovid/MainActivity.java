@@ -44,6 +44,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import es.uniovi.eii.asturcovid.datos.AreaSanitariaDataSource;
 import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
@@ -65,9 +66,6 @@ public class MainActivity extends AppCompatActivity {
             return mensaje;
         }
     }
-    //private MapaFragment mapaFragment;
-
-    //private ListaAreasFragment listaAreasFragment;
 
     private ViewPager viewPager;
 
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String FECHA_ACTUALIZACION = "fecha_actualizacion";
 
-    private String fecha;
+    protected static String fecha;
 
     SharedPreferences sharedPreferencesMainActivity;
 
@@ -120,6 +118,66 @@ public class MainActivity extends AppCompatActivity {
         indice.add("Hello World");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, indice);
         //lista.setAdapter(adapter);
+    }
+
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        //private List<Fragment> fragments = new ArrayList<>();
+        private int numeroDeElementos;
+        private String[] titulos = new String[]{"Mapa", "Lista Áreas"};
+
+        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+            numeroDeElementos = behavior;
+        }
+
+        /*public void addFragment(Fragment fragment, String title){
+            fragments.add(fragment);
+            fragmentTitles.add(title);
+        }*/
+        @Override
+        public CharSequence getPageTitle(int position){
+            return titulos[position];
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case 0:
+                    return new MapaFragment();
+                case 1:
+                    return new ListaAreasFragment(areaPreferida, fecha);
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return numeroDeElementos;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //cargarAreasSanitarias();
+        DownloadFilesTask task = new DownloadFilesTask();
+        task.execute();
+
+        AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
+        dataSource.open();
+
+        listaAreasSanitarias = dataSource.getAllValorations();
+
+        dataSource.close();
+
+        sharedPreferencesMainActivity =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        areaPreferida = sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
 
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
@@ -153,71 +211,10 @@ public class MainActivity extends AppCompatActivity {
         //listaAreasFragment = new ListaAreasFragment();
 
 
-       // viewPagerAdapter.addFragment(mapaFragment, "Mapa");
+        // viewPagerAdapter.addFragment(mapaFragment, "Mapa");
         //viewPagerAdapter.addFragment(listaAreasFragment, "Lista Áreas");
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-    }
-
-
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-
-        //private List<Fragment> fragments = new ArrayList<>();
-        private int numeroDeElementos;
-        private String[] titulos = new String[]{"Mapa", "Lista Áreas"};
-
-        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
-            numeroDeElementos = behavior;
-        }
-
-        /*public void addFragment(Fragment fragment, String title){
-            fragments.add(fragment);
-            fragmentTitles.add(title);
-        }*/
-        @Override
-        public CharSequence getPageTitle(int position){
-            return titulos[position];
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            switch (position){
-                case 0:
-                    return new MapaFragment();
-                case 1:
-                    return new ListaAreasFragment();
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return numeroDeElementos;
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        //cargarAreasSanitarias();
-        DownloadFilesTask task = new DownloadFilesTask();
-        task.execute();
-
-        AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
-        dataSource.open();
-
-        listaAreasSanitarias = dataSource.getAllValorations();
-
-        dataSource.close();
-
-        sharedPreferencesMainActivity =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        areaPreferida = sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
     }
 
     @Override
@@ -256,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         BufferedReader bufferedReader = null;
 
         try {
-            URL url12  = new URL("https://drive.google.com/uc?export=download&id=1jvvVSSqoRYsTbDHschXUsUrtzqQhFdd6" );
+            URL url12  = new URL("https://www.dropbox.com/s/4d95qmhwktn0chj/areas_sanitarias.csv?dl=1" );
             URLConnection uc = url12.openConnection();
 
             reader = new InputStreamReader(uc.getInputStream());
@@ -329,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void mostrarAcercaDe(){
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-        alert.setTitle("AsturCOVID: Sprint 1");
+        alert.setTitle("AsturCOVID: Sprint 2");
         alert.setMessage("Desarrollado por Samuel, Luis y Sofía.");
         alert.setPositiveButton("OK", null);
         alert.show();

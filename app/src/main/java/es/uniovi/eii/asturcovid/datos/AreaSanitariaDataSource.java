@@ -122,4 +122,31 @@ public class AreaSanitariaDataSource {
         // lista.
         return areaSanitariaList;
     }
+
+    /**
+     * Devuelve el área sanitaria correspondiente al ID pasado como parámetro
+     * @param id ID del área sanitaria a buscar, de tipo int
+     * @return Área Sanitaria
+     */
+    public AreaSanitaria getAreaSanitaria(int id) {
+        AreaSanitaria areaSanitaria = new AreaSanitaria();
+        Cursor cursor = database.rawQuery("SELECT * FROM TABLA_AREAS_SANITARIAS WHERE ID_AREA = ?", null);
+        cursor.moveToFirst();
+
+        areaSanitaria.setId(cursor.getInt(0));
+        areaSanitaria.setNombre_area(cursor.getString(1));
+        String nombre = cursor.getString(2);
+        String ubicacion = cursor.getString(3);
+        Long telefono = cursor.getLong(4);
+        areaSanitaria.setCasos_totales(cursor.getInt(5));
+        areaSanitaria.setCasos_hoy(cursor.getInt(6));
+        String imagen = cursor.getString(7);
+        String web_hospital = cursor.getString(8);
+
+        areaSanitaria.setHospital(new Hospital(nombre,telefono,ubicacion, imagen, web_hospital));
+
+        cursor.close();
+
+        return areaSanitaria;
+    }
 }
