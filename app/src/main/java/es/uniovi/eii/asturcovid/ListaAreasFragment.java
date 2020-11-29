@@ -32,6 +32,12 @@ public class ListaAreasFragment extends Fragment {
     private RecyclerView recyclerView;
     List<AreaSanitaria> listaAreasSanitarias = new ArrayList<>();
 
+    public ListaAreasFragment(){
+        this.areaSanitariaPreferida = MainActivity.sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
+        this.fechaActualizacion = "no definida";
+
+    }
+
     public ListaAreasFragment(String areaSanitariaPreferida, String fechaActualizacion) {
         this.areaSanitariaPreferida = areaSanitariaPreferida;
         this.fechaActualizacion = fechaActualizacion;

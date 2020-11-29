@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected static String fecha;
 
-    SharedPreferences sharedPreferencesMainActivity;
+    protected static SharedPreferences sharedPreferencesMainActivity;
 
     public static String areaPreferida = "-1";
 
