@@ -166,7 +166,13 @@ public class MainActivity extends AppCompatActivity {
 
         //cargarAreasSanitarias();
         DownloadFilesTask task = new DownloadFilesTask();
-        task.execute();
+        try {
+            task.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
         dataSource.open();

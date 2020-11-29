@@ -5,9 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.Random;
+
 class MyDBHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "asturCOVID.db";
+    private static final String DATABASE_NAME = new Random().nextInt(999999) + ".db";
     private static final int DATABASE_VERSION = 1;
 
     // Tablas
