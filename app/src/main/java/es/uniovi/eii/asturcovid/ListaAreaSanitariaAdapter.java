@@ -64,18 +64,31 @@ public class ListaAreaSanitariaAdapter extends RecyclerView.Adapter<ListaAreaSan
 
         private TextView nombre_area;
         private TextView numero_area;
+        private ImageView icono_nivel_incidencia;
 
         public AreaSanitariaViewHolder(View itemView) {
             super(itemView);
-
             nombre_area = (TextView)itemView.findViewById(R.id.nombreAreaSanitaria);
             numero_area = (TextView)itemView.findViewById(R.id.numeroAreaSanitaria);
+            icono_nivel_incidencia = (ImageView) itemView.findViewById(R.id.iconoAreaSanitaria);
         }
 
         // asignar valores a los componentes
         public void bindUser(final AreaSanitaria area, final OnItemClickListener listener) {
             nombre_area.setText(area.getNombre_area());
             numero_area.setText("Número " + area.getId());
+
+            switch (area.getNumero_incidencia()){
+                case 0:
+                    icono_nivel_incidencia.setBackgroundResource(R.drawable.verde_marcador);
+                    break;
+                case 1:
+                    icono_nivel_incidencia.setBackgroundResource(R.drawable.amarillo_marcador);
+                    break;
+                case 2:
+                    icono_nivel_incidencia.setBackgroundResource(R.drawable.rojo_marcador);
+                    break;
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {

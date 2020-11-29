@@ -9,9 +9,8 @@
     <ImageView
         android:id="@+id/iconoAreaSanitaria"
         android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="@string/app_name"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_height="65dp"
+        android:contentDescription="@string/app_name"/>
 
     <LinearLayout
         android:layout_width="0dp"

@@ -10,6 +10,7 @@ public class AreaSanitaria implements Parcelable {
     private Hospital hospital;
     private int casos_totales;
     private int casos_hoy;
+    private int numero_incidencia;
 
     public AreaSanitaria(){}
 
@@ -93,5 +94,13 @@ public class AreaSanitaria implements Parcelable {
 
     public void setCasos_hoy(int casos_hoy) {
         this.casos_hoy = casos_hoy;
+    }
+
+    public int getNumero_incidencia() {
+        return numero_incidencia;
+    }
+
+    public void setNumero_incidencia(int numero_incidencia) {
+        this.numero_incidencia = numero_incidencia;
     }
 }

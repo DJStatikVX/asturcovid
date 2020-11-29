@@ -2,11 +2,13 @@ package es.uniovi.eii.asturcovid;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,6 +64,28 @@ public class ListaAreasFragment extends Fragment {
 
             areaSanitariaDataSource.close();
 
+            //Calculo maximo casos totales
+            int max = 0;
+            for (AreaSanitaria a : listaAreasSanitarias) {
+                int casos_totales = a.getCasos_totales();
+                if (casos_totales > max) {
+                    max = casos_totales;
+                }
+            }
+
+            //Calcular nivel de incidencia de cada area
+            for (AreaSanitaria a : listaAreasSanitarias) {
+                double valor = (a.getCasos_totales()*1.0)/max;
+                if(valor >= 0 && valor <= 0.33){
+                    a.setNumero_incidencia(0);
+                }else if(valor > 0.33 && valor <= 0.66){
+                    a.setNumero_incidencia(1);
+                }else if(valor > 0.66 && valor <= 1){
+                    a.setNumero_incidencia(2);
+                }
+            }
+
+            //Eliminar area seleccionada de la lista
             for (AreaSanitaria a : listaAreasSanitarias) {
                 if (a.getId() == Integer.parseInt(areaSanitariaPreferida)) {
                     preferida = a;
@@ -72,9 +96,21 @@ public class ListaAreasFragment extends Fragment {
 
             TextView nombreAreaSanitaria = root.findViewById(R.id.nombreAreaSanitaria);
             TextView numeroAreaSanitaria = root.findViewById(R.id.numeroAreaSanitaria);
+            ImageView icono_nivel_incidencia = root.findViewById(R.id.iconoAreaSanitaria);
 
             nombreAreaSanitaria.setText(preferida.getNombre_area());
             numeroAreaSanitaria.setText("Número " + preferida.getId());
+            switch (preferida.getNumero_incidencia()){
+                case 0:
+                    icono_nivel_incidencia.setBackgroundResource(R.drawable.verde_marcador);
+                    break;
+                case 1:
+                    icono_nivel_incidencia.setBackgroundResource(R.drawable.amarillo_marcador);
+                    break;
+                case 2:
+                    icono_nivel_incidencia.setBackgroundResource(R.drawable.rojo_marcador);
+                    break;
+            }
 
             View lineaAreaPreferida = (View) root.findViewById(R.id.linea_area_preferida);
             lineaAreaPreferida.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +151,27 @@ public class ListaAreasFragment extends Fragment {
             listaAreasSanitarias = areaSanitariaDataSource.getAllValorations();
 
             areaSanitariaDataSource.close();
+
+            //Calculo maximo casos totales
+            int max = 0;
+            for (AreaSanitaria a : listaAreasSanitarias) {
+                int casos_totales = a.getCasos_totales();
+                if (casos_totales > max) {
+                    max = casos_totales;
+                }
+            }
+
+            //Calcular nivel de incidencia de cada area
+            for (AreaSanitaria a : listaAreasSanitarias) {
+                double valor = (a.getCasos_totales()*1.0)/max;
+                if(valor >= 0 && valor <= 0.33){
+                    a.setNumero_incidencia(0);
+                }else if(valor > 0.33 && valor <= 0.66){
+                    a.setNumero_incidencia(1);
+                }else if(valor > 0.66 && valor <= 1){
+                    a.setNumero_incidencia(2);
+                }
+            }
 
             ListaAreaSanitariaAdapter lasAdapter = new ListaAreaSanitariaAdapter(listaAreasSanitarias, fechaActualizacion,
                     new ListaAreaSanitariaAdapter.OnItemClickListener() {
