@@ -25,6 +25,7 @@
         android:layout_width="62dp"
         android:layout_height="27dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="5"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -32,8 +33,7 @@
         app:layout_constraintHorizontal_bias="0.322"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.55"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.55" />
 
     <Button
         android:id="@+id/btnAreaSanitariaNarcea"
@@ -41,6 +41,7 @@
         android:layout_width="62dp"
         android:layout_height="53dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="2"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -48,8 +49,7 @@
         app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.758"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.758" />
 
     <Button
         android:id="@+id/btnAreaSanitariaMieres"
@@ -57,6 +57,7 @@
         android:layout_width="57dp"
         android:layout_height="25dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="7"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -64,8 +65,7 @@
         app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.745"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.745" />
 
     <Button
         android:id="@+id/btnAreaSanitariaLangreo"
@@ -73,6 +73,7 @@
         android:layout_width="59dp"
         android:layout_height="20dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="8"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -80,8 +81,7 @@
         app:layout_constraintHorizontal_bias="0.354"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.685"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.685" />
 
     <Button
         android:id="@+id/btnAreaSanitariaOviedo"
@@ -89,6 +89,7 @@
         android:layout_width="97dp"
         android:layout_height="25dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="4"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -96,8 +97,7 @@
         app:layout_constraintHorizontal_bias="0.247"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.6"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.6" />
 
     <Button
         android:id="@+id/btnAreaSanitariaOviedo2"
@@ -105,6 +105,7 @@
         android:layout_width="51dp"
         android:layout_height="45dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="4"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -112,8 +113,7 @@
         app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.729"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.729" />
 
     <Button
         android:id="@+id/btnAreaSanitariaArriondas"
@@ -121,6 +121,7 @@
         android:layout_width="94dp"
         android:layout_height="33dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="6"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -128,8 +129,7 @@
         app:layout_constraintHorizontal_bias="0.439"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.621"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.621" />
 
     <Button
         android:id="@+id/btnAreaSanitariaJarrio"
@@ -137,6 +137,7 @@
         android:layout_width="88dp"
         android:layout_height="24dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="1"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -144,8 +145,7 @@
         app:layout_constraintHorizontal_bias="0.107"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.545"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.545" />
 
     <Button
         android:id="@+id/btnAreaSanitariaJarrio2"
@@ -153,6 +153,7 @@
         android:layout_width="40dp"
         android:layout_height="47dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="1"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -160,8 +161,7 @@
         app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.648"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.648" />
 
     <Button
         android:id="@+id/btnAreaSanitariaAviles"
@@ -169,6 +169,7 @@
         android:layout_width="62dp"
         android:layout_height="18dp"
         android:alpha="1"
+        android:background="@null"
         android:onClick="clickOnItem"
         android:tag="3"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
@@ -176,8 +177,7 @@
         app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.536"
-        android:background="@null"/>
+        app:layout_constraintVertical_bias="0.536" />
 
     <Button
         android:id="@+id/btnAreaSanitariaAviles2"
@@ -204,10 +204,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
         app:layout_constraintEnd_toEndOf="@+id/imgMapa"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="@+id/imgMapa"
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
-        app:layout_constraintVertical_bias="0.151" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imgMapa"
@@ -381,7 +381,129 @@
             app:layout_column="1"
             app:layout_row="7"
             app:srcCompat="@drawable/rosa_fucsia" />
+
     </androidx.gridlayout.widget.GridLayout>
+
+    <ImageView
+        android:id="@+id/marcadorJarrio"
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:alpha="1"
+        android:background="@null"
+        android:contentDescription="@string/app_name"
+        android:onClick="clickOnItem"
+        android:tag="1"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.449" />
+
+    <ImageView
+        android:id="@+id/marcadorNarcea"
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:alpha="1"
+        android:background="@null"
+        android:onClick="clickOnItem"
+        android:tag="2"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.661" />
+
+    <ImageView
+        android:id="@+id/marcadorAviles"
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:alpha="1"
+        android:background="@null"
+        android:onClick="clickOnItem"
+        android:tag="3"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.251"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.374" />
+
+    <ImageView
+        android:id="@+id/marcadorOviedo"
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:alpha="1"
+        android:background="@null"
+        android:onClick="clickOnItem"
+        android:tag="4"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.661" />
+
+    <ImageView
+        android:id="@+id/marcadorMieres"
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:alpha="1"
+        android:background="@null"
+        android:onClick="clickOnItem"
+        android:tag="7"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.309"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.707" />
+
+    <ImageView
+        android:id="@+id/marcadorLangreo"
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:alpha="1"
+        android:background="@null"
+        android:onClick="clickOnItem"
+        android:tag="8"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.363"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.647" />
+
+    <ImageView
+        android:id="@+id/marcadorGijon"
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:alpha="1"
+        android:background="@null"
+        android:onClick="clickOnItem"
+        android:tag="5"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.418" />
+
+    <ImageView
+        android:id="@+id/marcadorArriondas"
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:alpha="1"
+        android:background="@null"
+        android:onClick="clickOnItem"
+        android:tag="6"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintVertical_bias="0.523" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
