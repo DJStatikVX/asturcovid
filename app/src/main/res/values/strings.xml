@@ -34,4 +34,5 @@
     <string name="lista_tabitem">Lista Áreas</string>
     <string name="nombreAreaSanitaria">Área Sanitaria</string>
     <string name="numeroAreaSanitaria">Número de Área Sanitaria</string>
+    <string name="ayuda">ayuda</string>
 </resources>

@@ -11,12 +11,23 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <ImageView
+                android:id="@+id/ayuda"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical|end"
+                android:contentDescription="@string/ayuda"
+                android:onClick="mostrarInfo"
+                android:src="@android:drawable/ic_dialog_info" />
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -26,6 +37,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
@@ -35,23 +47,20 @@
                 android:id="@+id/tabitem_mapa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mapa_tabitem">
-            </com.google.android.material.tabs.TabItem>
+                android:text="@string/mapa_tabitem"></com.google.android.material.tabs.TabItem>
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabitem_listaAreas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lista_tabitem">
-            </com.google.android.material.tabs.TabItem>
+                android:text="@string/lista_tabitem"></com.google.android.material.tabs.TabItem>
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-        </androidx.viewpager.widget.ViewPager>
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"></androidx.viewpager.widget.ViewPager>
     </LinearLayout>
 
     <fragment

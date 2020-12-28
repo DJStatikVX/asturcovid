@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -332,8 +333,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void mostrarAcercaDe(){
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-        alert.setTitle("AsturCOVID: Sprint 2");
+        alert.setTitle("AsturCOVID: Sprint 3");
         alert.setMessage("Desarrollado por Samuel, Luis y Sofía.");
+        alert.setPositiveButton("OK", null);
+        alert.show();
+    }
+
+    public void mostrarInfo(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        alert.setTitle("Cálculo de incidencia por áreas");
+        alert.setIcon(R.drawable.ayuda);
+
+        alert.setMessage(Html.fromHtml("La incidencia de un área se calcula a partir de la <b>normalización</b> de los datos con respecto al mayor número de casos en la última semana.<br><br>De esta manera:<br>" +
+                "<ul> <li> Incidencia <b>< 33%</b>: Marcador <b><font color='#006400'>verde</font></b></li>  <li> <b>33%</b> < Incidencia < <b>66%</b>: Marcador <b><font color='#FFD500'>amarillo</font></b></li>  <li> <b>66%</b> < Incidencia: Marcador <b><font color='#FF0000'>rojo</font></b></li> </ul>", Html.FROM_HTML_MODE_LEGACY));
         alert.setPositiveButton("OK", null);
         alert.show();
     }
