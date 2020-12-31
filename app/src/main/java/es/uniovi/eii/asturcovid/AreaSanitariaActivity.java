@@ -2,6 +2,7 @@ package es.uniovi.eii.asturcovid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
+
+import static es.uniovi.eii.asturcovid.MainActivity.AREA_SANITARIA_SELECCIONADA;
 
 public class AreaSanitariaActivity extends AppCompatActivity {
 
@@ -41,7 +44,7 @@ public class AreaSanitariaActivity extends AppCompatActivity {
 
         //Recepción datos como activity secundaria
         Intent intentAreaSanitaria = getIntent();
-        area = intentAreaSanitaria .getParcelableExtra(MainActivity.AREA_SANITARIA_SELECCIONADA);
+        area = intentAreaSanitaria .getParcelableExtra(AREA_SANITARIA_SELECCIONADA);
         fechaActualizacion = intentAreaSanitaria.getStringExtra(MainActivity.FECHA_ACTUALIZACION);
 
         //Gestion barra de la app
@@ -75,11 +78,16 @@ public class AreaSanitariaActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                visitarWeb(area.getHospital().getWeb_hospital());
+                //visitarWeb(area.getHospital().getWeb_hospital());
+                mostrarMapa();
             }
         });
+    }
 
-
+    private void mostrarMapa() {
+        Intent intent = new Intent(AreaSanitariaActivity.this, GoogleMapsActivity.class);
+        intent.putExtra(AREA_SANITARIA_SELECCIONADA, area);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     // Carga los datos que tenemos en la instancia en los componentes de la activity para mostrarlos

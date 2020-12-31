@@ -47,7 +47,9 @@ public class ListaAreasFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.areaSanitariaPreferida = MainActivity.sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
+        if(MainActivity.sharedPreferencesMainActivity != null){
+            this.areaSanitariaPreferida = MainActivity.sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
+        }
         // Hay área sanitaria preferida especificada
         if (!areaSanitariaPreferida.equals("-1") && !areaSanitariaPreferida.equals("")) {
             root = inflater.inflate(R.layout.lista_areas_fragment_selected, container, false);

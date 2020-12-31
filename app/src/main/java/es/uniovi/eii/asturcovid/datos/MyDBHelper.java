@@ -25,6 +25,8 @@ class MyDBHelper extends SQLiteOpenHelper {
     public static final String COLUMNA_CASOS_HOY_AREAS_SANITARIAS = "casos_hoy";
     public static final String COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS = "imagen_hospital";
     public static final String COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS = "web_hospital";
+    public static final String COLUMNA_LATITUD_HOSPITAL_AREAS_SANITARIAS = "latitud_hospital";
+    public static final String COLUMNA_LONGITUD_HOSPITAL_AREAS_SANITARIAS = "longitud_hospital";
 
     /**
      * Script para crear la base datos en SQL
@@ -39,7 +41,9 @@ class MyDBHelper extends SQLiteOpenHelper {
             COLUMNA_CASOS_TOTALES_AREAS_SANITARIAS + "  integer not null, " +
             COLUMNA_CASOS_HOY_AREAS_SANITARIAS + " integer not null," +
             COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS + " text not null," +
-            COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS + " text not null" +
+            COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS + " text not null," +
+            COLUMNA_LATITUD_HOSPITAL_AREAS_SANITARIAS + " double not null," +
+            COLUMNA_LONGITUD_HOSPITAL_AREAS_SANITARIAS + " double not null" +
             ");";
 
 

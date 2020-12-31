@@ -308,7 +308,9 @@ public class MainActivity extends AppCompatActivity {
                     int casos_hoy = Integer.parseInt(data[6]);
                     String imagen_hospital = data[7];
                     String web_hospital = data[8];
-                    Hospital hospital = new Hospital(nombre_hospital, telefono, ubicacion, imagen_hospital,web_hospital);
+                    double latitud = Double.parseDouble(data[9]);
+                    double longitud = Double.parseDouble(data[10]);
+                    Hospital hospital = new Hospital(nombre_hospital, telefono, ubicacion, imagen_hospital,web_hospital, latitud, longitud);
 
                     area = new AreaSanitaria(id, nombre_area, hospital, casos_total, casos_hoy);
 

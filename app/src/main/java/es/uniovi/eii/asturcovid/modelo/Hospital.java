@@ -10,15 +10,17 @@ public class Hospital implements Parcelable {
     private String direccion_hospital;
     private String imagen_hospital;
     private String web_hospital;
+    private double latitud;
+    private double longitud;
 
-
-
-    public Hospital(String nombre_hospital, long telefono, String direccion_hospital, String imagen_hospital, String web_hospital) {
+    public Hospital(String nombre_hospital, long telefono, String direccion_hospital, String imagen_hospital, String web_hospital, double latitud, double longitud) {
         this.nombre_hospital = nombre_hospital;
         this.telefono = telefono;
         this.direccion_hospital = direccion_hospital;
         this.imagen_hospital = imagen_hospital;
         this.web_hospital = web_hospital;
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 
     public String getNombre_hospital() {
@@ -41,12 +43,18 @@ public class Hospital implements Parcelable {
         return web_hospital;
     }
 
+    public double getLatitud() { return latitud; }
+
+    public double getLongitud() { return longitud; }
+
     protected Hospital(Parcel in) {
         nombre_hospital = in.readString();
         telefono = in.readLong();
         direccion_hospital = in.readString();
         imagen_hospital = in.readString();
         web_hospital = in.readString();
+        latitud = in.readDouble();
+        longitud = in.readDouble();
     }
 
     @Override
@@ -56,6 +64,8 @@ public class Hospital implements Parcelable {
         dest.writeString(direccion_hospital);
         dest.writeString(imagen_hospital);
         dest.writeString(web_hospital);
+        dest.writeDouble(latitud);
+        dest.writeDouble(longitud);
     }
 
     @Override

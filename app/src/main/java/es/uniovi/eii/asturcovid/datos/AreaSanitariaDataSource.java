@@ -32,7 +32,8 @@ public class AreaSanitariaDataSource {
     private final String[] allColumns = { MyDBHelper.COLUMNA_ID_AREAS_SANITARIAS, MyDBHelper.COLUMNA_NOMBRE_AREA_AREAS_SANITARIAS,
             MyDBHelper.COLUMNA_NOMBRE_HOSPITAL_AREAS_SANITARIAS, MyDBHelper.COLUMNA_DIRECCION_HOSPITAL_AREAS_SANITARIAS,
             MyDBHelper.COLUMNA_TELEFONO_AREA_AREAS_SANITARIAS, MyDBHelper.COLUMNA_CASOS_TOTALES_AREAS_SANITARIAS,
-            MyDBHelper.COLUMNA_CASOS_HOY_AREAS_SANITARIAS, MyDBHelper.COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS, MyDBHelper.COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS
+            MyDBHelper.COLUMNA_CASOS_HOY_AREAS_SANITARIAS, MyDBHelper.COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS, MyDBHelper.COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS,
+            MyDBHelper.COLUMNA_LATITUD_HOSPITAL_AREAS_SANITARIAS, MyDBHelper.COLUMNA_LONGITUD_HOSPITAL_AREAS_SANITARIAS
     };
 
     /**
@@ -78,6 +79,8 @@ public class AreaSanitariaDataSource {
         values.put(MyDBHelper.COLUMNA_CASOS_HOY_AREAS_SANITARIAS, areaSanitariaToInsert.getCasos_hoy());
         values.put(MyDBHelper.COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS, areaSanitariaToInsert.getHospital().getImagen_hospital());
         values.put(MyDBHelper.COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS, areaSanitariaToInsert.getHospital().getWeb_hospital());
+        values.put(MyDBHelper.COLUMNA_LATITUD_HOSPITAL_AREAS_SANITARIAS,areaSanitariaToInsert.getHospital().getLatitud());
+        values.put(MyDBHelper.COLUMNA_LONGITUD_HOSPITAL_AREAS_SANITARIAS,areaSanitariaToInsert.getHospital().getLongitud());
 
         // Insertamos la valoracion
         long insertId = database.insert(MyDBHelper.TABLA_AREAS_SANITARIAS, null, values);
@@ -109,8 +112,10 @@ public class AreaSanitariaDataSource {
             areaSanitaria.setCasos_hoy(cursor.getInt(6));
             String imagen = cursor.getString(7);
             String web_hospital = cursor.getString(8);
+            double latitud = cursor.getDouble(9);
+            double longitud = cursor.getDouble(10);
 
-            areaSanitaria.setHospital(new Hospital(nombre,telefono,ubicacion, imagen, web_hospital));
+            areaSanitaria.setHospital(new Hospital(nombre,telefono,ubicacion, imagen, web_hospital,latitud,longitud));
 
             areaSanitariaList.add(areaSanitaria);
             cursor.moveToNext();
@@ -142,8 +147,10 @@ public class AreaSanitariaDataSource {
         areaSanitaria.setCasos_hoy(cursor.getInt(6));
         String imagen = cursor.getString(7);
         String web_hospital = cursor.getString(8);
+        double latitud = cursor.getDouble(9);
+        double longitud = cursor.getDouble(10);
 
-        areaSanitaria.setHospital(new Hospital(nombre,telefono,ubicacion, imagen, web_hospital));
+        areaSanitaria.setHospital(new Hospital(nombre,telefono,ubicacion, imagen, web_hospital,latitud,longitud));
 
         cursor.close();
 

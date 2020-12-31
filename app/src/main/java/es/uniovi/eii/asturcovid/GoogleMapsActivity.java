@@ -14,6 +14,7 @@ package es.uniovi.eii.asturcovid;
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,17 +25,28 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
+
+import static es.uniovi.eii.asturcovid.MainActivity.AREA_SANITARIA_SELECCIONADA;
+
 /**
  * An activity that displays a Google map with a marker (pin) to indicate a particular location.
  */
 public class GoogleMapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
+    private AreaSanitaria area;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
+
+        //Recepción datos como activity secundaria
+        Intent intentAreaSanitaria = getIntent();
+        area = intentAreaSanitaria .getParcelableExtra(AREA_SANITARIA_SELECCIONADA);
+
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
