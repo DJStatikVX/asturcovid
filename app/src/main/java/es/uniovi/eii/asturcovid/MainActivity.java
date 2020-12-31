@@ -156,6 +156,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        @Override
         public int getCount() {
             return numeroDeElementos;
         }
@@ -222,6 +227,8 @@ public class MainActivity extends AppCompatActivity {
         //viewPagerAdapter.addFragment(listaAreasFragment, "Lista Áreas");
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        viewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
