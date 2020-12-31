@@ -98,14 +98,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //FloatingActionButton fab = findViewById(R.id.fab);
-        //fab.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        //                .setAction("Action", null).show();
-        //    }
-        //});
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -116,12 +108,22 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        //NavigationUI.setupWithNavController(navigationView, navController);
-        //ListView lista = (ListView) findViewById(R.id.listaMenu);
-        List<String> indice = new ArrayList<>();
-        indice.add("Hello World");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, indice);
-        //lista.setAdapter(adapter);
+
+        DownloadFilesTask task = new DownloadFilesTask();
+        try {
+            task.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
+        dataSource.open();
+
+        listaAreasSanitarias = dataSource.getAllValorations();
+
+        dataSource.close();
     }
 
 
@@ -173,23 +175,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        //cargarAreasSanitarias();
-        DownloadFilesTask task = new DownloadFilesTask();
-        try {
-            task.execute().get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
-        dataSource.open();
-
-        listaAreasSanitarias = dataSource.getAllValorations();
-
-        dataSource.close();
-
         sharedPreferencesMainActivity =
                 PreferenceManager.getDefaultSharedPreferences(this);
         areaPreferida = sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
@@ -222,12 +207,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        //listaAreasFragment = new ListaAreasFragment();
-
-
-        // viewPagerAdapter.addFragment(mapaFragment, "Mapa");
-        //viewPagerAdapter.addFragment(listaAreasFragment, "Lista Áreas");
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
