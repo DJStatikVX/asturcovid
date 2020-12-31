@@ -1,7 +1,7 @@
 package es.uniovi.eii.asturcovid;
 
 import android.app.ActivityOptions;
-import android.content.ClipData;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -12,16 +12,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TableLayout;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -36,14 +29,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -53,17 +44,22 @@ import es.uniovi.eii.asturcovid.modelo.Hospital;
 
 public class MainActivity extends AppCompatActivity {
 
-    private class DownloadFilesTask extends AsyncTask<Void, Integer, String>{
+    /**
+     * Tarea asíncrona de carga de base de datos en caso de haber novedades a descargar
+     */
+    private class DownloadFilesTask extends AsyncTask<Void, Integer, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
             String mensaje;
+
             try {
                 cargarAreasSanitarias();
                 mensaje = "Database actualizada";
-            }catch (Exception e){
+            } catch (Exception e) {
                 mensaje = "Error en la carga de la base de datos.";
             }
+
             return mensaje;
         }
     }
@@ -125,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
         dataSource.close();
     }
-
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 
