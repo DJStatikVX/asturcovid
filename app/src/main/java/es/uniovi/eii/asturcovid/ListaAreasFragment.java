@@ -25,6 +25,7 @@ import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
 
 import static es.uniovi.eii.asturcovid.MainActivity.AREA_SANITARIA_SELECCIONADA;
 import static es.uniovi.eii.asturcovid.MainActivity.FECHA_ACTUALIZACION;
+import static es.uniovi.eii.asturcovid.MainActivity.fecha;
 
 public class ListaAreasFragment extends Fragment {
     View root;
@@ -37,7 +38,6 @@ public class ListaAreasFragment extends Fragment {
     public ListaAreasFragment(){
         this.areaSanitariaPreferida = MainActivity.sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
         this.fechaActualizacion = "no definida";
-
     }
 
     public ListaAreasFragment(String areaSanitariaPreferida, String fechaActualizacion) {
@@ -64,53 +64,11 @@ public class ListaAreasFragment extends Fragment {
 
             areaSanitariaDataSource.close();
 
-            //Calculo maximo casos totales
-            int max = 0;
-            for (AreaSanitaria a : listaAreasSanitarias) {
-                int casos_totales = a.getCasos_totales();
-                if (casos_totales > max) {
-                    max = casos_totales;
-                }
-            }
+            calcularIncidencias(listaAreasSanitarias);
 
-            //Calcular nivel de incidencia de cada area
-            for (AreaSanitaria a : listaAreasSanitarias) {
-                double valor = (a.getCasos_totales()*1.0)/max;
-                if(valor >= 0 && valor <= 0.33){
-                    a.setNumero_incidencia(0);
-                }else if(valor > 0.33 && valor <= 0.66){
-                    a.setNumero_incidencia(1);
-                }else if(valor > 0.66 && valor <= 1){
-                    a.setNumero_incidencia(2);
-                }
-            }
+            excluirAreaPreferida();
 
-            //Eliminar area seleccionada de la lista
-            for (AreaSanitaria a : listaAreasSanitarias) {
-                if (a.getId() == Integer.parseInt(areaSanitariaPreferida)) {
-                    preferida = a;
-                    listaAreasSanitarias.remove(a);
-                    break;
-                }
-            }
-
-            TextView nombreAreaSanitaria = root.findViewById(R.id.nombreAreaSanitaria);
-            TextView numeroAreaSanitaria = root.findViewById(R.id.numeroAreaSanitaria);
-            ImageView icono_nivel_incidencia = root.findViewById(R.id.iconoAreaSanitaria);
-
-            nombreAreaSanitaria.setText(preferida.getNombre_area());
-            numeroAreaSanitaria.setText("Número " + preferida.getId());
-            switch (preferida.getNumero_incidencia()){
-                case 0:
-                    icono_nivel_incidencia.setBackgroundResource(R.drawable.verde_marcador);
-                    break;
-                case 1:
-                    icono_nivel_incidencia.setBackgroundResource(R.drawable.amarillo_marcador);
-                    break;
-                case 2:
-                    icono_nivel_incidencia.setBackgroundResource(R.drawable.rojo_marcador);
-                    break;
-            }
+            asignarDatosAreaPreferida(preferida);
 
             View lineaAreaPreferida = (View) root.findViewById(R.id.linea_area_preferida);
             lineaAreaPreferida.setOnClickListener(new View.OnClickListener() {
@@ -124,19 +82,8 @@ public class ListaAreasFragment extends Fragment {
                 }
             });
 
-            ListaAreaSanitariaAdapter lasAdapter = new ListaAreaSanitariaAdapter(listaAreasSanitarias, fechaActualizacion,
-                    new ListaAreaSanitariaAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(AreaSanitaria areaSanitaria) {
-                    Intent intent = new Intent(getActivity(), AreaSanitariaActivity.class);
-                    intent.putExtra(AREA_SANITARIA_SELECCIONADA, areaSanitaria);
-                    intent.putExtra(FECHA_ACTUALIZACION, MainActivity.fecha);
-                    // Transición de barrido
-                    startActivity(intent);
-                }
-            });
+            establecerAdapter(listaAreasSanitarias, fechaActualizacion);
 
-            recyclerView.setAdapter(lasAdapter);
         } else {
             root = inflater.inflate(R.layout.lista_areas_fragment_unselected, container, false);
             recyclerView = (RecyclerView) root.findViewById(R.id.recyclerViewUnselected);
@@ -152,42 +99,81 @@ public class ListaAreasFragment extends Fragment {
 
             areaSanitariaDataSource.close();
 
-            //Calculo maximo casos totales
-            int max = 0;
-            for (AreaSanitaria a : listaAreasSanitarias) {
-                int casos_totales = a.getCasos_totales();
-                if (casos_totales > max) {
-                    max = casos_totales;
-                }
-            }
+            calcularIncidencias(listaAreasSanitarias);
 
-            //Calcular nivel de incidencia de cada area
-            for (AreaSanitaria a : listaAreasSanitarias) {
-                double valor = (a.getCasos_totales()*1.0)/max;
-                if(valor >= 0 && valor <= 0.33){
-                    a.setNumero_incidencia(0);
-                }else if(valor > 0.33 && valor <= 0.66){
-                    a.setNumero_incidencia(1);
-                }else if(valor > 0.66 && valor <= 1){
-                    a.setNumero_incidencia(2);
-                }
-            }
-
-            ListaAreaSanitariaAdapter lasAdapter = new ListaAreaSanitariaAdapter(listaAreasSanitarias, fechaActualizacion,
-                    new ListaAreaSanitariaAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AreaSanitaria areaSanitaria) {
-                            Intent intent = new Intent(getActivity(), AreaSanitariaActivity.class);
-                            intent.putExtra(AREA_SANITARIA_SELECCIONADA, areaSanitaria);
-                            intent.putExtra(FECHA_ACTUALIZACION, MainActivity.fecha);
-                            // Transición de barrido
-                            startActivity(intent);
-                        }
-                    });
-
-            recyclerView.setAdapter(lasAdapter);
+            establecerAdapter(listaAreasSanitarias, fechaActualizacion);
         }
 
         return root;
+    }
+
+    private void excluirAreaPreferida() {
+        // Eliminar area seleccionada de la lista
+        for (AreaSanitaria a : listaAreasSanitarias) {
+            if (a.getId() == Integer.parseInt(areaSanitariaPreferida)) {
+                preferida = a;
+                listaAreasSanitarias.remove(a);
+                break;
+            }
+        }
+    }
+
+    private void calcularIncidencias(List<AreaSanitaria> listaAreasSanitarias) {
+        //Calculo maximo casos totales
+        int max = 0;
+        for (AreaSanitaria a : listaAreasSanitarias) {
+            int casos_totales = a.getCasos_totales();
+            if (casos_totales > max) {
+                max = casos_totales;
+            }
+        }
+
+        //Calcular nivel de incidencia de cada area
+        for (AreaSanitaria a : listaAreasSanitarias) {
+            double valor = (a.getCasos_totales()*1.0)/max;
+            if(valor >= 0 && valor <= 0.33){
+                a.setNumero_incidencia(0);
+            }else if(valor > 0.33 && valor <= 0.66){
+                a.setNumero_incidencia(1);
+            }else if(valor > 0.66 && valor <= 1){
+                a.setNumero_incidencia(2);
+            }
+        }
+    }
+
+    private void asignarDatosAreaPreferida(AreaSanitaria preferida) {
+        TextView nombreAreaSanitaria = root.findViewById(R.id.nombreAreaSanitaria);
+        TextView numeroAreaSanitaria = root.findViewById(R.id.numeroAreaSanitaria);
+        ImageView icono_nivel_incidencia = root.findViewById(R.id.iconoAreaSanitaria);
+
+        nombreAreaSanitaria.setText(preferida.getNombre_area());
+        numeroAreaSanitaria.setText("Número " + preferida.getId());
+        switch (preferida.getNumero_incidencia()){
+            case 0:
+                icono_nivel_incidencia.setBackgroundResource(R.drawable.verde_marcador);
+                break;
+            case 1:
+                icono_nivel_incidencia.setBackgroundResource(R.drawable.amarillo_marcador);
+                break;
+            case 2:
+                icono_nivel_incidencia.setBackgroundResource(R.drawable.rojo_marcador);
+                break;
+        }
+    }
+
+    private void establecerAdapter(List<AreaSanitaria> listaAreasSanitarias, String fechaActualizacion) {
+        ListaAreaSanitariaAdapter lasAdapter = new ListaAreaSanitariaAdapter(listaAreasSanitarias, fechaActualizacion,
+                new ListaAreaSanitariaAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AreaSanitaria areaSanitaria) {
+                        Intent intent = new Intent(getActivity(), AreaSanitariaActivity.class);
+                        intent.putExtra(AREA_SANITARIA_SELECCIONADA, areaSanitaria);
+                        intent.putExtra(FECHA_ACTUALIZACION, MainActivity.fecha);
+                        // Transición de barrido
+                        startActivity(intent);
+                    }
+                });
+
+        recyclerView.setAdapter(lasAdapter);
     }
 }
