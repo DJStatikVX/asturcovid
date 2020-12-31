@@ -16,6 +16,8 @@ package es.uniovi.eii.asturcovid;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -52,6 +54,12 @@ public class GoogleMapsActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // en la ActionBar activar una flecha para volver hacia atrás
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     /**
@@ -67,10 +75,17 @@ public class GoogleMapsActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        LatLng sydney = new LatLng(-33.852, 151.211);
+        LatLng posHospital = new LatLng(area.getHospital().getLatitud(), area.getHospital().getLongitud());
         googleMap.addMarker(new MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                .position(posHospital)
+                .title(area.getHospital().getNombre_hospital())
+                .snippet(area.getHospital().getDireccion_hospital()));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posHospital,15.5f));
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }
