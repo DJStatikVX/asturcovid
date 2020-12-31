@@ -1,5 +1,6 @@
 package es.uniovi.eii.asturcovid;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
@@ -71,6 +72,12 @@ public class AreaSanitariaActivity extends AppCompatActivity {
         if (area!=null) //apertura en modo consulta
             mostrarDatos(area);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // en la ActionBar activar una flecha para volver hacia atrás
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         // Gestión del FAB
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +89,12 @@ public class AreaSanitariaActivity extends AppCompatActivity {
                 mostrarMapa();
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     private void mostrarMapa() {
