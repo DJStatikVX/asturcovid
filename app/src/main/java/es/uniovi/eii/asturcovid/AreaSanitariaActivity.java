@@ -112,8 +112,4 @@ public class AreaSanitariaActivity extends AppCompatActivity {
                     .load(url).into(imagen_hospital);
         }
     }
-
-    private void visitarWeb(String urlWebHospital) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlWebHospital)));
-    }
 }

@@ -35,7 +35,8 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".GoogleMapsActivity"
-            android:parentActivityName=".AreaSanitariaActivity">
+            android:parentActivityName=".AreaSanitariaActivity"
+            android:theme="@style/Theme.App">
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"

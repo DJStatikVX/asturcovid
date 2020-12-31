@@ -15,7 +15,9 @@ package es.uniovi.eii.asturcovid;
 // limitations under the License.
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
 
@@ -54,6 +57,15 @@ public class GoogleMapsActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Funcionalidad del ExtendedFloatingActionButton
+        ExtendedFloatingActionButton eFab = findViewById(R.id.extended_fab);
+        eFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                visitarWeb(area.getHospital().getWeb_hospital());
+            }
+        });
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -87,5 +99,9 @@ public class GoogleMapsActivity extends AppCompatActivity
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    private void visitarWeb(String urlWebHospital) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlWebHospital)));
     }
 }
