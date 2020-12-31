@@ -36,7 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
+/*    @Override
     protected void onPause() {
         super.onPause();
 
@@ -46,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
         Log.i("ID", name);
 
         MainActivity.areaPreferida = name;
-    }
+    }*/
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override

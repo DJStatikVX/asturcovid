@@ -87,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
     protected static SharedPreferences sharedPreferencesMainActivity;
 
-    public static String areaPreferida = "-1";
+    public String areaPreferida = "-1";
+
+    // Identificadores de activity
+    private static final int GESTION_AREA_PREFERIDA = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,8 +230,6 @@ public class MainActivity extends AppCompatActivity {
         //viewPagerAdapter.addFragment(listaAreasFragment, "Lista Áreas");
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        viewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -243,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.settings:
                 Intent intentSettingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(intentSettingsActivity);
+                startActivityForResult(intentSettingsActivity, GESTION_AREA_PREFERIDA);
 
                 return true;
             case R.id.action_about:
@@ -251,6 +252,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GESTION_AREA_PREFERIDA && resultCode == RESULT_OK) {
+            String nuevoValor = sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
+            if (!areaPreferida.equals(nuevoValor)) {
+                viewPager.getAdapter().notifyDataSetChanged();
+            }
+        }
     }
 
     @Override
