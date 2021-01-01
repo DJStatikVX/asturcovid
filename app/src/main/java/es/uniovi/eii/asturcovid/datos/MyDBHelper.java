@@ -7,13 +7,14 @@ import android.util.Log;
 
 import java.util.Random;
 
-class MyDBHelper extends SQLiteOpenHelper {
+public class MyDBHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = new Random().nextInt(999999) + ".db";
+    private static final String DATABASE_NAME = "AsturCovid.db";
     private static final int DATABASE_VERSION = 1;
 
     // Tablas
     public static final String TABLA_AREAS_SANITARIAS = "tabla_areas_sanitarias";
+    public static final String TABLA_FECHA = "tabla_fecha";
 
     // Columnas de tabla_areas_sanitarias
     public static final String COLUMNA_ID_AREAS_SANITARIAS = "id_area";
@@ -27,6 +28,8 @@ class MyDBHelper extends SQLiteOpenHelper {
     public static final String COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS = "web_hospital";
     public static final String COLUMNA_LATITUD_HOSPITAL_AREAS_SANITARIAS = "latitud_hospital";
     public static final String COLUMNA_LONGITUD_HOSPITAL_AREAS_SANITARIAS = "longitud_hospital";
+
+    public static final String COLUMNA_FECHA_ULTIMA_ACTUALIZACION = "fecha_ultima_actualizacion";
 
     /**
      * Script para crear la base datos en SQL
@@ -46,8 +49,14 @@ class MyDBHelper extends SQLiteOpenHelper {
             COLUMNA_LONGITUD_HOSPITAL_AREAS_SANITARIAS + " double not null" +
             ");";
 
+    private static final String CREATE_TABLA_FECHA = "create table if not exists " + TABLA_FECHA +
+            "( " +
+            COLUMNA_FECHA_ULTIMA_ACTUALIZACION + " " + "text not null" + ");";
+
 
     private static final String DATABASE_DROP_AREAS_SANITARIAS = "DROP TABLE IF EXISTS " + TABLA_AREAS_SANITARIAS;
+
+    private static final String DATABASE_DROP_FECHA = "DROP TABLE IF EXISTS " + TABLA_FECHA;
 
     public MyDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -57,12 +66,14 @@ class MyDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL(DATABASE_DROP_AREAS_SANITARIAS);
         db.execSQL(CREATE_TABLA_AREAS_SANITARIAS);
+        db.execSQL(CREATE_TABLA_FECHA);
         Log.i("ONCREATE", "EJECUTO CREACIÓN");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DATABASE_DROP_AREAS_SANITARIAS);
+        db.execSQL(DATABASE_DROP_FECHA);
         this.onCreate(db);
     }
 }

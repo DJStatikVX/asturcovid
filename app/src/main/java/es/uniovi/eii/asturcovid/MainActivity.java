@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -48,6 +49,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import es.uniovi.eii.asturcovid.datos.AreaSanitariaDataSource;
+import es.uniovi.eii.asturcovid.datos.FechaDataSource;
+import es.uniovi.eii.asturcovid.datos.MyDBHelper;
 import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
 import es.uniovi.eii.asturcovid.modelo.Hospital;
 
@@ -277,30 +280,31 @@ public class MainActivity extends AppCompatActivity {
             String[] data = line.split(";");
             fecha = data[9];
 
-            boolean hayDatosNuevos = true;
+            boolean hayDatosNuevos = false;
+
+            FechaDataSource fechaDataSource = new FechaDataSource(getApplicationContext());
+            fechaDataSource.open();
+
+            String ultimaActualizacion = fechaDataSource.getFechaUltimaActualizacion();
             try{
-                BufferedReader br = new BufferedReader(new FileReader("fecha_actualizacion.txt"));
-                String ultimaActualizacion = br.readLine();
-                if (ultimaActualizacion.isEmpty()) {
-                    hayDatosNuevos=true;
-                    BufferedWriter bw = new BufferedWriter(new FileWriter("fecha_actualizacion.txt"));
-                    bw.write(fecha);
-                    bw.close();
+                if (ultimaActualizacion == null) {
+                    hayDatosNuevos = true;
+                    ultimaActualizacion = fecha;
+                }else {
+                    SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+                    Date fechaAntigua = formateador.parse(ultimaActualizacion);
+                    Date fechaNueva = formateador.parse(fecha);
+
+                    hayDatosNuevos = fechaNueva.after(fechaAntigua);
                 }
-                SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/aaaa");
-                Date fechaAntigua = formateador.parse(ultimaActualizacion);
-                Date fechaNueva = formateador.parse(fecha);
 
-                hayDatosNuevos = fechaNueva.after(fechaAntigua);
-
-                br.close();
             } catch (java.text.ParseException e){
                 Snackbar.make(findViewById(R.id.layout_principal), "Formato de datos corrupto. Por favor, reinstale la aplicación.", Snackbar.LENGTH_LONG).show();
-            } catch(IOException e){
-                Snackbar.make(findViewById(R.id.layout_principal), "Se ha producido un error de entrada/salida. Por favor, reinstale la aplicación.", Snackbar.LENGTH_LONG).show();
             }
 
             if(hayDatosNuevos){
+                //Borramos los datos existentes en la base de datos para reemplazarlos por los nuevos
+                vaciarBaseDatos();
                 //A partir de aquí leemos a partir de la segunda línea.
                 while ((line = bufferedReader.readLine()) != null) {
                     data = line.split(";");
@@ -331,7 +335,10 @@ public class MainActivity extends AppCompatActivity {
                         areasSanitariasDataSource.close();
                     }
                 }
+                //Refrescamos la ultima fecha de actualizacion
+                fechaDataSource.insertarFechaUltimaActualizacion(ultimaActualizacion);
             }
+            fechaDataSource.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -343,6 +350,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void vaciarBaseDatos() {
+        MyDBHelper dbHelper = new MyDBHelper(getApplicationContext(),null,null,1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("delete FROM " + MyDBHelper.TABLA_AREAS_SANITARIAS);
+        db.execSQL("delete FROM " + MyDBHelper.TABLA_FECHA);
     }
 
     public void clickOnItem(View v) {
