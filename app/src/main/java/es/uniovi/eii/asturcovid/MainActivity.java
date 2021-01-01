@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import androidx.annotation.NonNull;
@@ -30,11 +31,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -268,36 +277,59 @@ public class MainActivity extends AppCompatActivity {
             String[] data = line.split(";");
             fecha = data[9];
 
-            //A partir de aquí leemos a partir de la segunda línea.
-            while ((line = bufferedReader.readLine()) != null) {
-                data = line.split(";");
-                if (data != null) { //El segundo condicional se va a cumplir siempre. Podemos quitarlo
+            boolean hayDatosNuevos = true;
+            try{
+                BufferedReader br = new BufferedReader(new FileReader("fecha_actualizacion.txt"));
+                String ultimaActualizacion = br.readLine();
+                if (ultimaActualizacion.isEmpty()) {
+                    hayDatosNuevos=true;
+                    BufferedWriter bw = new BufferedWriter(new FileWriter("fecha_actualizacion.txt"));
+                    bw.write(fecha);
+                    bw.close();
+                }
+                SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/aaaa");
+                Date fechaAntigua = formateador.parse(ultimaActualizacion);
+                Date fechaNueva = formateador.parse(fecha);
 
-                    int id = Integer.parseInt(data[0]);
-                    String nombre_area = data[1];
-                    String nombre_hospital = data[2];
-                    String ubicacion = data[3];
-                    long telefono = Long.parseLong(data[4]);
-                    int casos_total = Integer.parseInt(data[5]);
-                    int casos_hoy = Integer.parseInt(data[6]);
-                    String imagen_hospital = data[7];
-                    String web_hospital = data[8];
-                    double latitud = Double.parseDouble(data[9]);
-                    double longitud = Double.parseDouble(data[10]);
-                    Hospital hospital = new Hospital(nombre_hospital, telefono, ubicacion, imagen_hospital,web_hospital, latitud, longitud);
+                hayDatosNuevos = fechaNueva.after(fechaAntigua);
 
-                    area = new AreaSanitaria(id, nombre_area, hospital, casos_total, casos_hoy);
+                br.close();
+            } catch (java.text.ParseException e){
+                Snackbar.make(findViewById(R.id.layout_principal), "Formato de datos corrupto. Por favor, reinstale la aplicación.", Snackbar.LENGTH_LONG).show();
+            } catch(IOException e){
+                Snackbar.make(findViewById(R.id.layout_principal), "Se ha producido un error de entrada/salida. Por favor, reinstale la aplicación.", Snackbar.LENGTH_LONG).show();
+            }
 
-                    Log.d("cargarAreasSanitarias", area.toString());
+            if(hayDatosNuevos){
+                //A partir de aquí leemos a partir de la segunda línea.
+                while ((line = bufferedReader.readLine()) != null) {
+                    data = line.split(";");
+                    if (data != null) { //El segundo condicional se va a cumplir siempre. Podemos quitarlo
+                        int id = Integer.parseInt(data[0]);
+                        String nombre_area = data[1];
+                        String nombre_hospital = data[2];
+                        String ubicacion = data[3];
+                        long telefono = Long.parseLong(data[4]);
+                        int casos_total = Integer.parseInt(data[5]);
+                        int casos_hoy = Integer.parseInt(data[6]);
+                        String imagen_hospital = data[7];
+                        String web_hospital = data[8];
+                        double latitud = Double.parseDouble(data[9]);
+                        double longitud = Double.parseDouble(data[10]);
+                        Hospital hospital = new Hospital(nombre_hospital, telefono, ubicacion, imagen_hospital,web_hospital, latitud, longitud);
 
-                    //Ya no lo añadimos a la Lista de Películas, pasa antes por la base de datos donde queda almacenado.
-                    //  listaPeli.add(peli);
-                    //Metemos la película en la base de datos:
-                    AreaSanitariaDataSource areasSanitariasDataSource = new AreaSanitariaDataSource(getApplicationContext());
-                    areasSanitariasDataSource.open();
-                    areasSanitariasDataSource.createAreaSanitaria(area);
-                    areasSanitariasDataSource.close();
+                        area = new AreaSanitaria(id, nombre_area, hospital, casos_total, casos_hoy);
 
+                        Log.d("cargarAreasSanitarias", area.toString());
+
+                        //Ya no lo añadimos a la Lista de Películas, pasa antes por la base de datos donde queda almacenado.
+                        //  listaPeli.add(peli);
+                        //Metemos la película en la base de datos:
+                        AreaSanitariaDataSource areasSanitariasDataSource = new AreaSanitariaDataSource(getApplicationContext());
+                        areasSanitariasDataSource.open();
+                        areasSanitariasDataSource.createAreaSanitaria(area);
+                        areasSanitariasDataSource.close();
+                    }
                 }
             }
         } catch (Exception e) {
