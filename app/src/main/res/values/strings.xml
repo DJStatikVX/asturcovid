@@ -36,4 +36,8 @@
     <string name="numeroAreaSanitaria">Número de Área Sanitaria</string>
     <string name="ayuda">ayuda</string>
     <string name="visitarWeb">Visitar Web</string>
+    <string name="Areas_sanitarias">Áreas sanitarias</string>
+    <string name="Asturias">Asturias</string>
+    <string name="España">España</string>
+    <string name="AsturCovid">AsturCOVID</string>
 </resources>
