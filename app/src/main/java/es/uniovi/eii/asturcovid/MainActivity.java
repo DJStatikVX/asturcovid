@@ -53,6 +53,9 @@ import es.uniovi.eii.asturcovid.datos.FechaDataSource;
 import es.uniovi.eii.asturcovid.datos.MyDBHelper;
 import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
 import es.uniovi.eii.asturcovid.modelo.Hospital;
+import es.uniovi.eii.asturcovid.ui.areas.AreasFragment;
+import es.uniovi.eii.asturcovid.ui.asturias.AsturiasFragment;
+import es.uniovi.eii.asturcovid.ui.espana.EspanaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Identificadores de activity
     private static final int GESTION_AREA_PREFERIDA = 1;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,16 +110,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        //configurarNavigationDrawer(navigationView);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_areas, R.id.nav_asturias, R.id.nav_españa)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
 
         DownloadFilesTask task = new DownloadFilesTask();
         try {
@@ -126,12 +132,65 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        /*AsturiasFragment.DownloadFilesTaskAsturias task1 = new AsturiasFragment.DownloadFilesTaskAsturias();
+        try {
+            task1.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
         AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
         dataSource.open();
 
         listaAreasSanitarias = dataSource.getAllValorations();
 
         dataSource.close();
+    }
+
+    private void configurarNavigationDrawer(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        seleccionarOpcionMenuLateral(menuItem);
+                        return true;
+                    }
+        });
+    }
+
+    private void seleccionarOpcionMenuLateral(MenuItem menuItem) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        Fragment fragment = null;
+        Class fragmentClass;
+        switch(menuItem.getItemId()) {
+            case R.id.nav_areas:
+                fragmentClass = AreasFragment.class;
+                break;
+            case R.id.nav_asturias:
+                fragmentClass = AsturiasFragment.class;
+                break;
+            case R.id.nav_españa:
+                fragmentClass = EspanaFragment.class;
+                break;
+            default:
+                fragmentClass = AreasFragment.class;
+        }
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        drawer.closeDrawers();
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -186,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                 PreferenceManager.getDefaultSharedPreferences(this);
         areaPreferida = sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
 
-        viewPager = findViewById(R.id.view_pager);
+        /*viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
 
         mapa = findViewById(R.id.tabitem_mapa);
@@ -215,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));*/
     }
 
     @Override

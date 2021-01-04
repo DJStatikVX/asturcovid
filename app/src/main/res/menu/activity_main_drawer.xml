@@ -5,15 +5,15 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_areas"
             android:icon="@drawable/area_sanitaria_icono"
             android:title="@string/Areas_sanitarias" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_asturias"
             android:icon="@drawable/asturias_mapa"
             android:title="@string/Asturias" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_españa"
             android:icon="@drawable/espana_mapa"
             android:title="@string/España" />
     </group>
