@@ -35,57 +35,21 @@ public class AreasFragment extends Fragment {
     protected static String fecha;
     private View root;
     private ViewGroup container;
-    private LayoutInflater inflater;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_areas, container, false);
         this.container = container;
-        this.inflater = inflater;
-        //View root = inflater.inflate(R.layout.fragment_areas, container, false);
-
-        sharedPreferencesMainActivity =
-                PreferenceManager.getDefaultSharedPreferences(getActivity());
-        areaPreferida = sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
-
-        viewPager = root.findViewById(R.id.view_pager);
-        tabLayout = root.findViewById(R.id.tab_layout);
-
-        mapa = root.findViewById(R.id.tabitem_mapa);
-        listaAreas = root.findViewById(R.id.tabitem_listaAreas);
-
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-
-        final ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), tabLayout.getTabCount());
-        //mapaFragment = new MapaFragment();
-        viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         return root;
     }
 
     @Override
     public void onResume() {
-
         super.onResume();
+
+        LayoutInflater.from(getActivity())
+                .inflate(R.layout.fragment_areas, this.container, false);
 
         sharedPreferencesMainActivity =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -100,7 +64,7 @@ public class AreasFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
-        final ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), tabLayout.getTabCount());
+        final ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         //mapaFragment = new MapaFragment();
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -121,7 +85,7 @@ public class AreasFragment extends Fragment {
         });
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        root = inflater.inflate(R.layout.fragment_areas, container, false);
+        viewPager.setOffscreenPageLimit(viewPagerAdapter.getCount());
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
