@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -55,7 +56,7 @@ public class AsturiasFragment extends Fragment {
         protected String doInBackground(Void... voids) {
 
             try {
-                //realizarPeticionDatos();
+                realizarPeticionDatos();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -63,7 +64,7 @@ public class AsturiasFragment extends Fragment {
         }
     }
 
-    /*public static void realizarPeticionDatos(){
+    public static void realizarPeticionDatos(){
         try {
 
             URL url = new URL("https://api.covid19tracking.narrativa.com/api/country/spain/region/asturias?date_from=2020-12-21&date_to=2020-12-28");
@@ -91,20 +92,39 @@ public class AsturiasFragment extends Fragment {
                 scanner.close();
 
                 //Using the JSON simple library parse the string into a json object
-                JSONParser parse = new JSONParser();
-                JSONObject data_obj = (JSONObject) parse.parse(inline);
+                JSONObject data_obj = new JSONObject(inline);
 
-                JSONObject fechas = (JSONObject) data_obj.get("Dates");
+                JSONObject fechas = (JSONObject) data_obj.getJSONObject("dates");
 
                 HashMap<String, List<Integer>> map = new HashMap<>();
-                Set keys = fechas.keys;
-                for (String key:keys) {
+                Iterator<String> iterator = fechas.keys();
+                int count = 0;
 
+                while (iterator.hasNext() && count <= 7) {
+                    // Obtenemos el día en String
+                    String dia = iterator.next();
+                    // Obtenemos el objeto JSON asociado a ese día
+                    JSONObject dia_obj = fechas.getJSONObject(dia);
+                    // Accedemos al array regions
+                    JSONObject countries = dia_obj.getJSONObject("countries");
+                    JSONObject spain = countries.getJSONObject("Spain");
+                    JSONArray regions = spain.getJSONArray("regions");
+                    JSONObject asturias = (JSONObject) regions.get(0);
+
+                    // Obtenemos los datos que nos interesan
+                    // today_new_confirmed
+                    // today_new_deaths
+                    // today_new_hospitalised_patients_with_symptoms
+                    // today_new_recovered
+                    // today_new_intensive_care
+                    // today_new_open_cases
+
+                    count++;
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

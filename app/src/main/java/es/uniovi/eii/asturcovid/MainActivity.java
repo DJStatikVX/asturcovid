@@ -133,14 +133,14 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /*AsturiasFragment.DownloadFilesTaskAsturias task1 = new AsturiasFragment.DownloadFilesTaskAsturias();
+        AsturiasFragment.DownloadFilesTaskAsturias task1 = new AsturiasFragment.DownloadFilesTaskAsturias();
         try {
             task1.execute().get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
 
         AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
         dataSource.open();
