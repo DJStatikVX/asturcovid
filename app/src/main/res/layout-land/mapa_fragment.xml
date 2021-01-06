@@ -7,17 +7,14 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
-    <fragment
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_map_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/mobile_navigation" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnAreaSanitariaGijon"
@@ -28,11 +25,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="5"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.322"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.55" />
 
     <Button
@@ -44,11 +41,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="2"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.758" />
 
     <Button
@@ -60,11 +57,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="7"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.745" />
 
     <Button
@@ -76,11 +73,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="8"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.354"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.685" />
 
     <Button
@@ -92,11 +89,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="4"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.247"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.6" />
 
     <Button
@@ -108,11 +105,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="4"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.729" />
 
     <Button
@@ -124,11 +121,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="6"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.439"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.621" />
 
     <Button
@@ -140,11 +137,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="1"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.107"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.545" />
 
     <Button
@@ -156,11 +153,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="1"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.648" />
 
     <Button
@@ -172,11 +169,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="3"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.536" />
 
     <Button
@@ -188,11 +185,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="3"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.292"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.522" />
 
     <TextView
@@ -202,11 +199,11 @@
         android:gravity="center"
         android:text="@string/SeleccioneArea"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="@+id/imgMapa"
         app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="@+id/imgMapa"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
@@ -214,11 +211,11 @@
         android:layout_width="364dp"
         android:layout_height="131dp"
         android:contentDescription="@string/descripcionMapa"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.106"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.739"
         app:srcCompat="@drawable/mapa" />
 
@@ -393,11 +390,11 @@
         android:contentDescription="@string/app_name"
         android:onClick="clickOnItem"
         android:tag="1"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.449" />
 
     <ImageView
@@ -408,11 +405,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="2"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.661" />
 
     <ImageView
@@ -423,11 +420,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="3"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.251"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.374" />
 
     <ImageView
@@ -438,11 +435,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="4"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.661" />
 
     <ImageView
@@ -453,11 +450,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="7"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.309"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.707" />
 
     <ImageView
@@ -468,11 +465,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="8"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.647" />
 
     <ImageView
@@ -483,11 +480,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="5"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.34"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.418" />
 
     <ImageView
@@ -498,11 +495,11 @@
         android:background="@null"
         android:onClick="clickOnItem"
         android:tag="6"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_map_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.434"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="@+id/drawer_map_layout"
         app:layout_constraintVertical_bias="0.523" />
 
 
