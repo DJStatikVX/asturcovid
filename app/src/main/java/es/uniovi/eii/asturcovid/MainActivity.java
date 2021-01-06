@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -32,6 +34,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -40,13 +46,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 import es.uniovi.eii.asturcovid.datos.AreaSanitariaDataSource;
@@ -80,6 +91,204 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public class DownloadAsturiasDataTask extends AsyncTask<Void, Integer, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                realizarPeticionDatosAsturias();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
+
+        public void realizarPeticionDatosAsturias() {
+            try {
+
+                URL url = new URL("https://api.covid19tracking.narrativa.com/api/country/spain/region/asturias?date_from=2020-12-21&date_to=2020-12-28");
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                //Getting the response code
+                int responsecode = conn.getResponseCode();
+
+                if (responsecode != 200) {
+                    throw new RuntimeException("HttpResponseCode: " + responsecode);
+                } else {
+
+                    String inline = "";
+                    Scanner scanner = new Scanner(url.openStream());
+
+                    //Write all the JSON data into a string using a scanner
+                    while (scanner.hasNext()) {
+                        inline += scanner.nextLine();
+                    }
+
+                    //Close the scanner
+                    scanner.close();
+
+                    //Using the JSON simple library parse the string into a json object
+                    JSONObject data_obj = new JSONObject(inline);
+
+                    JSONObject fechas = (JSONObject) data_obj.getJSONObject("dates");
+
+                    //HashMap<String, List<Integer>> map = new HashMap<>();
+                    Iterator<String> iterator = fechas.keys();
+                    int count = 0;
+
+                    while (iterator.hasNext() && count < 7) {
+                        // Obtenemos el día en String
+                        String dia = iterator.next();
+                        // Obtenemos el objeto JSON asociado a ese día
+                        JSONObject dia_obj = fechas.getJSONObject(dia);
+                        // Accedemos al array regions
+                        JSONObject countries = dia_obj.getJSONObject("countries");
+                        JSONObject spain = countries.getJSONObject("Spain");
+                        JSONArray regions = spain.getJSONArray("regions");
+                        JSONObject asturias = (JSONObject) regions.get(0);
+
+                        List<Integer> datos = new ArrayList<Integer>();
+                        // Obtenemos los datos que nos interesan
+                        // today_new_confirmed
+                        int confirmed = Integer.parseInt(asturias.getString("today_new_confirmed"));
+                        // today_new_deaths
+                        int deaths = Integer.parseInt(asturias.getString("today_new_deaths"));
+                        // today_new_hospitalised_patients_with_symptoms
+                        int symptoms = Integer.parseInt(asturias.getString("today_new_hospitalised_patients_with_symptoms"));
+                        // today_new_recovered
+                        int recovered = Integer.parseInt(asturias.getString("today_new_recovered"));
+                        // today_new_intensive_care
+                        int uci = Integer.parseInt(asturias.getString("today_new_intensive_care"));
+                        // today_new_open_cases
+                        int open_cases = Integer.parseInt(asturias.getString("today_new_open_cases"));
+
+                        datos.add(confirmed);
+                        datos.add(deaths);
+                        datos.add(symptoms);
+                        datos.add(recovered);
+                        datos.add(uci);
+                        datos.add(open_cases);
+
+                        //mapAsturias.put(dia, datos);
+                        fechasAsturias.add(dia);
+                        //inicializamos matriz bidimensional
+                        for (int i = 0; i < 7; i++) {
+                            datosAsturias.add(new ArrayList<Integer>());
+                        }
+                        datosAsturias.set(count, datos);
+
+                        count++;
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public class DownloadEspanaDataTask extends AsyncTask<Void, Integer, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                realizarPeticionDatosEspana();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
+
+        public void realizarPeticionDatosEspana() {
+            try {
+
+                URL url = new URL("https://api.covid19tracking.narrativa.com/api/country/spain?date_from=2020-12-21&date_to=2020-12-28");
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                //Getting the response code
+                int responsecode = conn.getResponseCode();
+
+                if (responsecode != 200) {
+                    throw new RuntimeException("HttpResponseCode: " + responsecode);
+                } else {
+
+                    String inline = "";
+                    Scanner scanner = new Scanner(url.openStream());
+
+                    //Write all the JSON data into a string using a scanner
+                    while (scanner.hasNext()) {
+                        inline += scanner.nextLine();
+                    }
+
+                    //Close the scanner
+                    scanner.close();
+
+                    //Using the JSON simple library parse the string into a json object
+                    JSONObject data_obj = new JSONObject(inline);
+
+                    JSONObject fechas = (JSONObject) data_obj.getJSONObject("dates");
+
+                    //HashMap<String, List<Integer>> map = new HashMap<>();
+                    Iterator<String> iterator = fechas.keys();
+                    int count = 0;
+
+                    while (iterator.hasNext() && count < 7) {
+                        // Obtenemos el día en String
+                        String dia = iterator.next();
+                        // Obtenemos el objeto JSON asociado a ese día
+                        JSONObject dia_obj = fechas.getJSONObject(dia);
+                        // Accedemos al array regions
+                        JSONObject countries = dia_obj.getJSONObject("countries");
+                        JSONObject spain = countries.getJSONObject("Spain");
+
+                        List<Integer> datos = new ArrayList<Integer>();
+                        // Obtenemos los datos que nos interesan
+                        // today_new_confirmed
+                        int confirmed = Integer.parseInt(spain.getString("today_new_confirmed"));
+                        // today_new_deaths
+                        int deaths = Integer.parseInt(spain.getString("today_new_deaths"));
+                        // today_new_hospitalised_patients_with_symptoms
+                        int symptoms = Integer.parseInt(spain.getString("today_new_hospitalised_patients_with_symptoms"));
+                        // today_new_recovered
+                        int recovered = Integer.parseInt(spain.getString("today_new_recovered"));
+                        // today_new_intensive_care
+                        int uci = Integer.parseInt(spain.getString("today_new_intensive_care"));
+                        // today_new_open_cases
+                        int open_cases = Integer.parseInt(spain.getString("today_new_open_cases"));
+
+                        datos.add(confirmed);
+                        datos.add(deaths);
+                        datos.add(symptoms);
+                        datos.add(recovered);
+                        datos.add(uci);
+                        datos.add(open_cases);
+
+                        //mapEspana.put(dia, datos);
+                        fechasEspana.add(dia);
+                        //inicializamos matriz bidimensional
+                        for (int i = 0; i < 7; i++) {
+                            datosEspana.add(new ArrayList<Integer>());
+                        }
+                        datosEspana.set(count, datos);
+
+                        count++;
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private ViewPager viewPager;
 
     private TabLayout tabLayout;
@@ -104,6 +313,14 @@ public class MainActivity extends AppCompatActivity {
     // Identificadores de activity
     private static final int GESTION_AREA_PREFERIDA = 1;
     private DrawerLayout drawer;
+
+    private List<List<Integer>> datosAsturias = new ArrayList<>();
+    private List<List<Integer>> datosEspana = new ArrayList<>();
+
+    private ArrayList<String> fechasAsturias = new ArrayList<>();
+    private ArrayList<String> fechasEspana = new ArrayList<>();
+
+    public boolean datosCargados = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,14 +349,12 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        AsturiasFragment.DownloadFilesTaskAsturias task1 = new AsturiasFragment.DownloadFilesTaskAsturias();
-        try {
-            task1.execute().get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        DownloadAsturiasDataTask taskAsturias = new DownloadAsturiasDataTask();
+        taskAsturias.execute();
+
+        DownloadEspanaDataTask taskEspana = new DownloadEspanaDataTask();
+        taskEspana.execute();
+
 
         AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
         dataSource.open();
@@ -147,6 +362,22 @@ public class MainActivity extends AppCompatActivity {
         listaAreasSanitarias = dataSource.getAllValorations();
 
         dataSource.close();
+    }
+
+    public List<List<Integer>> getDatosAsturias() {
+        return datosAsturias;
+    }
+
+    public List<List<Integer>> getDatosEspana() {
+        return datosEspana;
+    }
+
+    public List<String> getFechasAsturias() {
+        return fechasAsturias;
+    }
+
+    public List<String> getFechasEspana() {
+        return fechasEspana;
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -165,14 +396,14 @@ public class MainActivity extends AppCompatActivity {
             fragmentTitles.add(title);
         }*/
         @Override
-        public CharSequence getPageTitle(int position){
+        public CharSequence getPageTitle(int position) {
             return titulos[position];
         }
 
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     return new MapaFragment();
                 case 1:
@@ -241,8 +472,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.settings:
                 Intent intentSettingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivityForResult(intentSettingsActivity, GESTION_AREA_PREFERIDA);
@@ -280,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
         BufferedReader bufferedReader = null;
 
         try {
-            URL url12  = new URL("https://www.dropbox.com/s/4d95qmhwktn0chj/areas_sanitarias.csv?dl=1" );
+            URL url12 = new URL("https://www.dropbox.com/s/4d95qmhwktn0chj/areas_sanitarias.csv?dl=1");
             URLConnection uc = url12.openConnection();
 
             reader = new InputStreamReader(uc.getInputStream());
@@ -301,11 +532,11 @@ public class MainActivity extends AppCompatActivity {
             fechaDataSource.open();
 
             String ultimaActualizacion = fechaDataSource.getFechaUltimaActualizacion();
-            try{
+            try {
                 if (ultimaActualizacion == null) {
                     hayDatosNuevos = true;
                     ultimaActualizacion = fecha;
-                }else {
+                } else {
                     SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
                     Date fechaAntigua = formateador.parse(ultimaActualizacion);
                     Date fechaNueva = formateador.parse(fecha);
@@ -313,11 +544,11 @@ public class MainActivity extends AppCompatActivity {
                     hayDatosNuevos = fechaNueva.after(fechaAntigua);
                 }
 
-            } catch (java.text.ParseException e){
+            } catch (java.text.ParseException e) {
                 Snackbar.make(findViewById(R.id.layout_principal), "Formato de datos corrupto. Por favor, reinstale la aplicación.", Snackbar.LENGTH_LONG).show();
             }
 
-            if(hayDatosNuevos){
+            if (hayDatosNuevos) {
                 //Borramos los datos existentes en la base de datos para reemplazarlos por los nuevos
                 vaciarBaseDatos();
                 //A partir de aquí leemos a partir de la segunda línea.
@@ -335,7 +566,7 @@ public class MainActivity extends AppCompatActivity {
                         String web_hospital = data[8];
                         double latitud = Double.parseDouble(data[9]);
                         double longitud = Double.parseDouble(data[10]);
-                        Hospital hospital = new Hospital(nombre_hospital, telefono, ubicacion, imagen_hospital,web_hospital, latitud, longitud);
+                        Hospital hospital = new Hospital(nombre_hospital, telefono, ubicacion, imagen_hospital, web_hospital, latitud, longitud);
 
                         area = new AreaSanitaria(id, nombre_area, hospital, casos_total, casos_hoy);
 
@@ -368,7 +599,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void vaciarBaseDatos() {
-        MyDBHelper dbHelper = new MyDBHelper(getApplicationContext(),null,null,1);
+        MyDBHelper dbHelper = new MyDBHelper(getApplicationContext(), null, null, 1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("delete FROM " + MyDBHelper.TABLA_AREAS_SANITARIAS);
         db.execSQL("delete FROM " + MyDBHelper.TABLA_FECHA);
@@ -376,7 +607,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickOnItem(View v) {
         int id_area = Integer.parseInt(v.getTag().toString());
-        AreaSanitaria area = listaAreasSanitarias.get(id_area-1);
+        AreaSanitaria area = listaAreasSanitarias.get(id_area - 1);
 
         Log.i("Click adapter", "Item Clicked: " + id_area);
 
@@ -387,7 +618,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
-    public void mostrarAcercaDe(){
+    public void mostrarAcercaDe() {
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
         alert.setTitle("AsturCOVID: Sprint 3");
         alert.setMessage("Desarrollado por Samuel, Luis y Sofía.");
