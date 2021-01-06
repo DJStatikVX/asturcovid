@@ -13,7 +13,7 @@ import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
 import es.uniovi.eii.asturcovid.modelo.Hospital;
 
 public class AreaSanitariaDataSource {
-    /**
+    /***
      * Referencia para manejar la base de datos. Este objeto lo obtenemos a partir de MyDBHelper
      * y nos proporciona metodos para hacer operaciones
      * CRUD (create, read, update and delete)
