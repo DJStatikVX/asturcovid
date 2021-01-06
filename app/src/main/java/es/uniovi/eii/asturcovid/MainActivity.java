@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        configurarNavigationDrawer(navigationView);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -148,52 +147,6 @@ public class MainActivity extends AppCompatActivity {
         listaAreasSanitarias = dataSource.getAllValorations();
 
         dataSource.close();
-    }
-
-    private void configurarNavigationDrawer(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        seleccionarOpcionMenuLateral(menuItem);
-                        return true;
-                    }
-        });
-    }
-
-    private void seleccionarOpcionMenuLateral(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-        Class fragmentClass;
-        switch(menuItem.getItemId()) {
-            case R.id.nav_areas:
-                fragmentClass = AreasFragment.class;
-                break;
-            case R.id.nav_asturias:
-                fragmentClass = AsturiasFragment.class;
-                break;
-            case R.id.nav_españa:
-                fragmentClass = EspanaFragment.class;
-                break;
-            default:
-                fragmentClass = AreasFragment.class;
-        }
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment, fragment);
-        fragmentTransaction.commit();
-        // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);
-        // Set action bar title
-        setTitle(menuItem.getTitle());
-        // Close the navigation drawer
-        drawer.closeDrawers();
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
