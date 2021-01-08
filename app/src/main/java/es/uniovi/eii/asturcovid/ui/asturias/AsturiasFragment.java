@@ -1,6 +1,8 @@
 package es.uniovi.eii.asturcovid.ui.asturias;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -24,11 +28,22 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.uniovi.eii.asturcovid.AreaSanitariaActivity;
+import es.uniovi.eii.asturcovid.ListaAreaSanitariaAdapter;
+import es.uniovi.eii.asturcovid.ListaDatosCovidFechaAdapter;
 import es.uniovi.eii.asturcovid.MainActivity;
 import es.uniovi.eii.asturcovid.R;
+import es.uniovi.eii.asturcovid.datos.DatosCovidFecha;
+import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
+
+import static es.uniovi.eii.asturcovid.MainActivity.AREA_SANITARIA_SELECCIONADA;
+import static es.uniovi.eii.asturcovid.MainActivity.FECHA_ACTUALIZACION;
 
 public class AsturiasFragment extends Fragment {
     private BarChart barChart;
+
+    private RecyclerView recyclerView;
+    private List<DatosCovidFecha> datos = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +51,19 @@ public class AsturiasFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_asturias, container, false);
         barChart = root.findViewById(R.id.barChartAsturias_view);
         initBarChart();
-        showBarChart();
+
+        try {
+            showBarChart();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_datos_asturias);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(root.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        establecerAdapter(datos);
 
         return root;
     }
@@ -54,39 +81,47 @@ public class AsturiasFragment extends Fragment {
         }
     }
 
-    private void showBarChart() {
-        ArrayList<Integer> valueList = new ArrayList<Integer>();
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        String title = "Casos confirmados";
+    private void showBarChart() throws InterruptedException {
+        try {
+            ArrayList<Integer> valueList = new ArrayList<Integer>();
+            ArrayList<BarEntry> entries = new ArrayList<>();
+            String title = "Casos confirmados";
 
-        List<List<Integer>> datos = ((MainActivity) getActivity()).getDatosAsturias();
+            List<List<Integer>> datos = ((MainActivity) getActivity()).getDatosAsturias();
 
-        // input data
-        for (int i = 0; i < 7; i++) {
-            valueList.add(datos.get(i).get(0));
+            // input data
+            for (int i = 0; i < 7; i++) {
+                valueList.add(datos.get(i).get(0));
+            }
+
+            List<String> dias = new ArrayList<>();
+            List<String> fechas = ((MainActivity) getActivity()).getFechasAsturias();
+            for (String dia : fechas) {
+                dias.add(dia);
+            }
+            String[] labels = new String[]{dias.get(0), dias.get(1), dias.get(2), dias.get(3), dias.get(4), dias.get(5), dias.get(6)};
+
+            // fit the data into a bar
+            for (int i = 0; i < valueList.size(); i++) {
+                BarEntry barEntry = new BarEntry(i, valueList.get(i).intValue());
+                entries.add(barEntry);
+            }
+
+            // establecemos etiquetas eje x
+            barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+
+            BarDataSet barDataSet = new BarDataSet(entries, title);
+            initBarDataSet(barDataSet);
+            BarData data = new BarData(barDataSet);
+            barChart.setData(data);
+            barChart.invalidate();
+
+            asociarDatosAFechas(dias, datos);
+        }catch (Exception e){
+            //Log.i("Exception", e.getMessage());
+            Thread.sleep(500);
+            showBarChart();
         }
-
-        List<String> dias = new ArrayList<>();
-        List<String> fechas = ((MainActivity) getActivity()).getFechasAsturias();
-        for (String dia : fechas) {
-            dias.add(dia);
-        }
-        String[] labels = new String[]{dias.get(0), dias.get(1), dias.get(2), dias.get(3), dias.get(4), dias.get(5), dias.get(6)};
-
-        // fit the data into a bar
-        for (int i = 0; i < valueList.size(); i++) {
-            BarEntry barEntry = new BarEntry(i, valueList.get(i).intValue());
-            entries.add(barEntry);
-        }
-
-        // establecemos etiquetas eje x
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-
-        BarDataSet barDataSet = new BarDataSet(entries, title);
-        initBarDataSet(barDataSet);
-        BarData data = new BarData(barDataSet);
-        barChart.setData(data);
-        barChart.invalidate();
     }
 
     private void initBarDataSet(BarDataSet barDataSet) {
@@ -149,6 +184,32 @@ public class AsturiasFragment extends Fragment {
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         //setting the location of legend outside the chart, default false if not set
         legend.setDrawInside(false);
+    }
 
+    private void asociarDatosAFechas(List<String> fechas, List<List<Integer>> datos){
+        for (int i=0; i < 7; i++){
+            String fecha = fechas.get(i);
+            int confirmados = datos.get(i).get(0);
+            int fallecidos = datos.get(i).get(1);
+            int hospitalizados = datos.get(i).get(2);
+            int recuperados = datos.get(i).get(3);
+            int uci = datos.get(i).get(4);
+            int casos_abiertos = datos.get(i).get(5);
+
+            DatosCovidFecha dato = new DatosCovidFecha(fecha,confirmados,fallecidos,hospitalizados,recuperados,uci,casos_abiertos);
+            this.datos.add(dato);
+        }
+    }
+
+    private void establecerAdapter(List<DatosCovidFecha> datosCovidFecha) {
+        ListaDatosCovidFechaAdapter ldcfAdapter = new ListaDatosCovidFechaAdapter(datosCovidFecha,
+                new ListaDatosCovidFechaAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DatosCovidFecha datos) {
+
+                    }
+                });
+
+        recyclerView.setAdapter(ldcfAdapter);
     }
 }

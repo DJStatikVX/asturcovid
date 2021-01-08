@@ -1,9 +1,6 @@
 package es.uniovi.eii.asturcovid;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

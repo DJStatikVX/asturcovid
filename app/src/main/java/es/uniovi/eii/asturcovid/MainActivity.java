@@ -320,8 +320,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> fechasAsturias = new ArrayList<>();
     private ArrayList<String> fechasEspana = new ArrayList<>();
 
-    public boolean datosCargados = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

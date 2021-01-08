@@ -36,9 +36,11 @@ public class EspanaFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_espana, container, false);
         barChart = root.findViewById(R.id.barChartEspana_view);
         initBarChart();
-        showBarChart();
-        // hay que controlar que no pete la app cuando los datos no estan cargados
-        //MainActivity.datosCargados = true;
+        try {
+            showBarChart();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return root;
     }
 
@@ -55,39 +57,45 @@ public class EspanaFragment extends Fragment {
         }
     }
 
-    private void showBarChart() {
-        ArrayList<Integer> valueList = new ArrayList<Integer>();
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        String title = "Casos confirmados";
+    private void showBarChart() throws InterruptedException {
+        try {
+            ArrayList<Integer> valueList = new ArrayList<Integer>();
+            ArrayList<BarEntry> entries = new ArrayList<>();
+            String title = "Casos confirmados";
 
-        List<List<Integer>> datos = ((MainActivity) getActivity()).getDatosEspana();
+            List<List<Integer>> datos = ((MainActivity) getActivity()).getDatosEspana();
 
-        // input data
-        for (int i = 0; i < 7; i++) {
-            valueList.add(datos.get(i).get(0));
+            // input data
+            for (int i = 0; i < 7; i++) {
+                valueList.add(datos.get(i).get(0));
+            }
+
+            List<String> dias = new ArrayList<>();
+            List<String> fechas = ((MainActivity) getActivity()).getFechasEspana();
+            for (String dia : fechas) {
+                dias.add(dia);
+            }
+            String[] labels = new String[]{dias.get(0), dias.get(1), dias.get(2), dias.get(3), dias.get(4), dias.get(5), dias.get(6)};
+
+            // fit the data into a bar
+            for (int i = 0; i < valueList.size(); i++) {
+                BarEntry barEntry = new BarEntry(i, valueList.get(i).intValue());
+                entries.add(barEntry);
+            }
+
+            // establecemos etiquetas eje x
+            barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+
+            BarDataSet barDataSet = new BarDataSet(entries, title);
+            initBarDataSet(barDataSet);
+            BarData data = new BarData(barDataSet);
+            barChart.setData(data);
+            barChart.invalidate();
+        }catch (Exception e){
+            //Log.i("Exception", e.getMessage());
+            Thread.sleep(500);
+            showBarChart();
         }
-
-        List<String> dias = new ArrayList<>();
-        List<String> fechas = ((MainActivity) getActivity()).getFechasEspana();
-        for (String dia : fechas) {
-            dias.add(dia);
-        }
-        String[] labels = new String[]{dias.get(0), dias.get(1), dias.get(2), dias.get(3), dias.get(4), dias.get(5), dias.get(6)};
-
-        // fit the data into a bar
-        for (int i = 0; i < valueList.size(); i++) {
-            BarEntry barEntry = new BarEntry(i, valueList.get(i).intValue());
-            entries.add(barEntry);
-        }
-
-        // establecemos etiquetas eje x
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-
-        BarDataSet barDataSet = new BarDataSet(entries, title);
-        initBarDataSet(barDataSet);
-        BarData data = new BarData(barDataSet);
-        barChart.setData(data);
-        barChart.invalidate();
     }
 
     private void initBarDataSet(BarDataSet barDataSet) {

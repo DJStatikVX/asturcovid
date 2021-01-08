@@ -42,4 +42,12 @@
     <string name="AsturCovid">AsturCOVID</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fecha">24/12/2020</string>
+    <string name="datos">Datos</string>
+    <string name="numero_contagios">341</string>
+    <string name="numero_fallecidos">212</string>
+    <string name="pulsar_datos">Pulse en un día para más información</string>
+    <string name="numero_hospitalizados">34</string>
+    <string name="numero_recuperados">286</string>
+    <string name="fuente_datos">Fuente: API COVID-19 Narrativa</string>
 </resources>
