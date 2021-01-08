@@ -23,10 +23,12 @@ public class ListaDatosCovidFechaAdapter extends RecyclerView.Adapter<ListaDatos
 
     private List<DatosCovidFecha> listaDatosCovidFecha;
     private final ListaDatosCovidFechaAdapter.OnItemClickListener listener;
+    private boolean region;
 
-    public ListaDatosCovidFechaAdapter(List<DatosCovidFecha> datosFecha, ListaDatosCovidFechaAdapter.OnItemClickListener listener) {
+    public ListaDatosCovidFechaAdapter(List<DatosCovidFecha> datosFecha, ListaDatosCovidFechaAdapter.OnItemClickListener listener, boolean region) {
         this.listaDatosCovidFecha = datosFecha;
         this.listener = listener;
+        this.region = region;
     }
 
     /* Indicamos el layout a "inflar" para usar en la vista
@@ -35,9 +37,16 @@ public class ListaDatosCovidFechaAdapter extends RecyclerView.Adapter<ListaDatos
     @Override
     public ListaDatosCovidFechaAdapter.ListaDatosCovidFechaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Creamos la vista con el layout para un elemento
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.linea_recycler_view_datos, parent, false);
-        return new ListaDatosCovidFechaAdapter.ListaDatosCovidFechaViewHolder(itemView);
+        if(region){
+            View itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.linea_recycler_view_datos_asturias, parent, false);
+            return new ListaDatosCovidFechaAdapter.ListaDatosCovidFechaViewHolder(itemView);
+        }else{
+            View itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.linea_recycler_view_datos_espana, parent, false);
+            return new ListaDatosCovidFechaAdapter.ListaDatosCovidFechaViewHolder(itemView);
+        }
+
     }
 
     @Override

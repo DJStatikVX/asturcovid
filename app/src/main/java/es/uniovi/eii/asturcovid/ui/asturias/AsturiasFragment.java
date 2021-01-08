@@ -213,7 +213,7 @@ public class AsturiasFragment extends Fragment {
                     public void onItemClick(DatosCovidFecha datos) {
 
                     }
-                });
+                }, true);
 
         recyclerView.setAdapter(ldcfAdapter);
     }
