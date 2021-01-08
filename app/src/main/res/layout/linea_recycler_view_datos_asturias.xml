@@ -51,7 +51,7 @@
 
             <TextView
                 android:id="@+id/id_contagios_texto"
-                android:layout_width="30dp"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:text="@string/numero_contagios"
                 android:gravity="center_horizontal"

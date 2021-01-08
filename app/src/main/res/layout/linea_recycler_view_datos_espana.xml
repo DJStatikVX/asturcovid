@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_xlarge"
+    android:onClick="mostrarDialogoDatos">
+
+    <ImageView
+        android:id="@+id/id_icono_calendario"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/app_name"
+        tools:srcCompat="@drawable/icono_calendario" />
+
+    <TextView
+        android:id="@+id/id_fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textStyle="bold"
+        android:text="@string/fecha"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <LinearLayout
+        android:id="@+id/id_datos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/id_contagios_icono"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="@string/app_name"
+                tools:srcCompat="@drawable/contagios_icono" />
+
+            <TextView
+                android:id="@+id/id_contagios_texto"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:text="@string/numero_contagios"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/id_fallecidos_icono"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="@string/app_name"
+                tools:srcCompat="@drawable/fallecidos_icono" />
+
+            <TextView
+                android:id="@+id/id_fallecidos_texto"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="@string/numero_fallecidos"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/id_recuperados_icono"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="@string/app_name"
+                tools:srcCompat="@drawable/recuperados_icono" />
+
+            <TextView
+                android:id="@+id/id_recuperados_texto"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="@string/numero_recuperados"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

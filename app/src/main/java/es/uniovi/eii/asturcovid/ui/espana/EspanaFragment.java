@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -24,11 +26,16 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.uniovi.eii.asturcovid.ListaDatosCovidFechaAdapter;
 import es.uniovi.eii.asturcovid.MainActivity;
 import es.uniovi.eii.asturcovid.R;
+import es.uniovi.eii.asturcovid.datos.DatosCovidFecha;
 
 public class EspanaFragment extends Fragment {
     private BarChart barChart;
+
+    private RecyclerView recyclerView;
+    private List<DatosCovidFecha> datos = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +48,19 @@ public class EspanaFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_datos_espana);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(root.getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        establecerAdapter(datos);
+
         return root;
     }
 
@@ -91,7 +111,9 @@ public class EspanaFragment extends Fragment {
             BarData data = new BarData(barDataSet);
             barChart.setData(data);
             barChart.invalidate();
-        }catch (Exception e){
+
+            asociarDatosAFechas(dias, datos);
+        } catch (Exception e) {
             //Log.i("Exception", e.getMessage());
             Thread.sleep(500);
             showBarChart();
@@ -159,6 +181,33 @@ public class EspanaFragment extends Fragment {
         //setting the location of legend outside the chart, default false if not set
         legend.setDrawInside(false);
 
+    }
+
+    private void asociarDatosAFechas(List<String> fechas, List<List<Integer>> datos) {
+        for (int i = 0; i < 7; i++) {
+            String fecha = fechas.get(i);
+            int confirmados = datos.get(i).get(0);
+            int fallecidos = datos.get(i).get(1);
+            int hospitalizados = datos.get(i).get(2);
+            int recuperados = datos.get(i).get(3);
+            int uci = datos.get(i).get(4);
+            int casos_abiertos = datos.get(i).get(5);
+
+            DatosCovidFecha dato = new DatosCovidFecha(fecha, confirmados, fallecidos, hospitalizados, recuperados, uci, casos_abiertos);
+            this.datos.add(dato);
+        }
+    }
+
+    private void establecerAdapter(List<DatosCovidFecha> datosCovidFecha) {
+        ListaDatosCovidFechaAdapter ldcfAdapter = new ListaDatosCovidFechaAdapter(datosCovidFecha,
+                new ListaDatosCovidFechaAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DatosCovidFecha datos) {
+
+                    }
+                }, false);
+
+        recyclerView.setAdapter(ldcfAdapter);
     }
 
 }
