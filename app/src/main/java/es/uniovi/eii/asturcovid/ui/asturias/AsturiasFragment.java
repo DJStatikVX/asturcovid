@@ -59,7 +59,12 @@ public class AsturiasFragment extends Fragment {
         }
 
         recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_datos_asturias);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(root.getContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(root.getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
