@@ -10,13 +10,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import es.uniovi.eii.asturcovid.datos.DatosAreaSanitariaCovidFecha;
+import es.uniovi.eii.asturcovid.datos.DatosCovidFecha;
 import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
 
 import static es.uniovi.eii.asturcovid.MainActivity.AREA_SANITARIA_SELECCIONADA;
@@ -28,14 +40,14 @@ public class AreaSanitariaActivity extends AppCompatActivity {
     private TextView nombre_hospital;
     private TextView ubicacion_hospital;
     private TextView telefono_hospital;
-    private TextView casos_totales;
-    private TextView casos_hoy;
     private ImageView imagen_hospital;
     private CollapsingToolbarLayout toolBarLayout;
     private TextView txtDatosActualizados;
 
     private String fechaActualizacion;
 
+    private List<DatosAreaSanitariaCovidFecha> datosAreaSanitariaCovidFechaList = new ArrayList<>();
+    private RecyclerView recyclerView;
 
 
     @Override
@@ -45,10 +57,26 @@ public class AreaSanitariaActivity extends AppCompatActivity {
 
         //Recepción datos como activity secundaria
         Intent intentAreaSanitaria = getIntent();
-        area = intentAreaSanitaria .getParcelableExtra(AREA_SANITARIA_SELECCIONADA);
+        area = intentAreaSanitaria.getParcelableExtra(AREA_SANITARIA_SELECCIONADA);
         fechaActualizacion = intentAreaSanitaria.getStringExtra(MainActivity.FECHA_ACTUALIZACION);
 
-        //Gestion barra de la app
+        Date fecha = null;
+        try {
+            fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaActualizacion);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+
+        for (int i = 6; i >= 0; i--) {
+            String fechaStr = new SimpleDateFormat("dd/MM/yyyy").format(cal.getTime());
+            datosAreaSanitariaCovidFechaList.add(new DatosAreaSanitariaCovidFecha(fechaStr, area.getListaCasos().get(i), area.getListaMuertes().get(i), area.getListaPruebas().get(i)));
+            cal.add(Calendar.DATE, -1);
+        }
+
+        // Gestion barra de la app
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -61,15 +89,24 @@ public class AreaSanitariaActivity extends AppCompatActivity {
             toolBarLayout.setTitle(nombre_area + " (" + id + ")");
         }
 
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_datos_area_sanitaria);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        establecerAdapter(datosAreaSanitariaCovidFechaList);
+
         // Gestión de los controles que contienen los datos de la película
         nombre_hospital = (TextView) findViewById(R.id.hospital);
         ubicacion_hospital = (TextView) findViewById(R.id.ubicacion);
         telefono_hospital = (TextView) findViewById(R.id.telefono);
-        casos_totales = (TextView) findViewById(R.id.numeroCasosTotales);
-        casos_hoy = (TextView) findViewById(R.id.numeroCasosHoy);
         txtDatosActualizados = (TextView) findViewById(R.id.txtDatosActualizados);
 
-        if (area!=null) //apertura en modo consulta
+        if (area != null) //apertura en modo consulta
             mostrarDatos(area);
 
         ActionBar actionBar = getSupportActionBar();
@@ -97,6 +134,19 @@ public class AreaSanitariaActivity extends AppCompatActivity {
         return true;
     }
 
+    private void establecerAdapter(List<DatosAreaSanitariaCovidFecha> datosAreaSanitariaCovidFecha) {
+        ListaDatosAreaSanitariaAdapter ldcfAdapter = new ListaDatosAreaSanitariaAdapter(datosAreaSanitariaCovidFecha,
+                new ListaDatosAreaSanitariaAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DatosAreaSanitariaCovidFecha datos) {
+                        DatosAreaSanitariaFragment frag = new DatosAreaSanitariaFragment(datos);
+                        frag.show(getSupportFragmentManager(), DatosAreaSanitariaFragment.class.getCanonicalName());
+                    }
+                });
+
+        recyclerView.setAdapter(ldcfAdapter);
+    }
+
     private void mostrarMapa() {
         Intent intent = new Intent(AreaSanitariaActivity.this, GoogleMapsActivity.class);
         intent.putExtra(AREA_SANITARIA_SELECCIONADA, area);
@@ -104,7 +154,7 @@ public class AreaSanitariaActivity extends AppCompatActivity {
     }
 
     // Carga los datos que tenemos en la instancia en los componentes de la activity para mostrarlos
-    public void mostrarDatos(AreaSanitaria area){
+    public void mostrarDatos(AreaSanitaria area) {
         if (!area.getNombre_area().isEmpty()) { //apertura en modo consulta
             //Actualizar componentes con valores de la pelicula específica
             int id = area.getId();
@@ -115,8 +165,6 @@ public class AreaSanitariaActivity extends AppCompatActivity {
             nombre_hospital.setText(area.getHospital().getNombre_hospital());
             ubicacion_hospital.setText(area.getHospital().getDireccion_hospital());
             telefono_hospital.setText("" + (long) area.getHospital().getTelefono());
-            casos_totales.setText("" + (int) area.getCasosTotales());
-            casos_hoy.setText("" + (int) area.getListaCasos().get(6));
             txtDatosActualizados.setText("Datos actualizados a " + fechaActualizacion);
 
             String url = area.getHospital().getImagen_hospital();

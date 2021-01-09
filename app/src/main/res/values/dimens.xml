@@ -12,4 +12,6 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="popup_width">400dp</dimen>
     <dimen name="popup_height">375dp</dimen>
+    <dimen name="popupArea_height">275dp</dimen>
+    <dimen name="popupArea_width">300dp</dimen>
 </resources>

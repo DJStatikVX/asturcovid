@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_xlarge">
+
+    <ImageView
+        android:id="@+id/icono_calendario_area_sanitaria"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        tools:srcCompat="@drawable/icono_calendario"></ImageView>
+
+    <TextView
+        android:id="@+id/fecha_area_sanitaria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/fecha"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/id_datos_area_sanitaria"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/id_contagios_icono"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="@string/app_name"
+                tools:srcCompat="@drawable/icono_confirmados" />
+
+            <TextView
+                android:id="@+id/id_contagios_texto"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/numero_contagios"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/id_pruebas_icono"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="@string/app_name"
+                tools:srcCompat="@drawable/icono_pruebas" />
+
+            <TextView
+                android:id="@+id/id_pruebas_texto"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/numero_recuperados"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/id_fallecidos_icono"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="@string/app_name"
+                tools:srcCompat="@drawable/fallecidos_icono" />
+
+            <TextView
+                android:id="@+id/id_fallecidos_texto"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/numero_fallecidos"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
