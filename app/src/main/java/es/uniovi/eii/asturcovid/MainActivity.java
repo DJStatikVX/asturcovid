@@ -49,10 +49,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -107,7 +110,23 @@ public class MainActivity extends AppCompatActivity {
         public void realizarPeticionDatosAsturias() {
             try {
 
-                URL url = new URL("https://api.covid19tracking.narrativa.com/api/country/spain/region/asturias?date_from=2020-12-21&date_to=2020-12-28");
+                // Obtenemos las fechas
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, -1);
+
+                Date date_to = cal.getTime();
+
+                cal.add(Calendar.DATE, -7);
+
+                Date date_from = cal.getTime();
+
+                // Las convertimos a String para introducir en la petición de la API
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                String from = dateFormat.format(date_from);
+                String to = dateFormat.format(date_to);
+
+                URL url = new URL("https://api.covid19tracking.narrativa.com/api/country/spain/region/asturias?date_from=" + from + "&date_to=" + to);
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
@@ -207,7 +226,23 @@ public class MainActivity extends AppCompatActivity {
         public void realizarPeticionDatosEspana() {
             try {
 
-                URL url = new URL("https://api.covid19tracking.narrativa.com/api/country/spain?date_from=2020-12-21&date_to=2020-12-28");
+                // Obtenemos las fechas
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, -1);
+
+                Date date_to = cal.getTime();
+
+                cal.add(Calendar.DATE, -7);
+
+                Date date_from = cal.getTime();
+
+                // Las convertimos a String para introducir en la petición de la API
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                String from = dateFormat.format(date_from);
+                String to = dateFormat.format(date_to);
+
+                URL url = new URL("https://api.covid19tracking.narrativa.com/api/country/spain?date_from=" + from + "&date_to=" + to);
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
