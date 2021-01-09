@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.uniovi.eii.asturcovid.AreaSanitariaActivity;
+import es.uniovi.eii.asturcovid.DatosAPIFragment;
 import es.uniovi.eii.asturcovid.ListaAreaSanitariaAdapter;
 import es.uniovi.eii.asturcovid.ListaDatosCovidFechaAdapter;
 import es.uniovi.eii.asturcovid.MainActivity;
@@ -211,7 +212,8 @@ public class AsturiasFragment extends Fragment {
                 new ListaDatosCovidFechaAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(DatosCovidFecha datos) {
-
+                        DatosAPIFragment frag = new DatosAPIFragment(datos);
+                        frag.show(getActivity().getSupportFragmentManager(), DatosAPIFragment.class.getCanonicalName());
                     }
                 }, true);
 

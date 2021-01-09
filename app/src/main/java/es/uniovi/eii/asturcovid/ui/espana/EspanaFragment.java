@@ -26,6 +26,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.uniovi.eii.asturcovid.DatosAPIFragment;
 import es.uniovi.eii.asturcovid.ListaDatosCovidFechaAdapter;
 import es.uniovi.eii.asturcovid.MainActivity;
 import es.uniovi.eii.asturcovid.R;
@@ -203,7 +204,8 @@ public class EspanaFragment extends Fragment {
                 new ListaDatosCovidFechaAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(DatosCovidFecha datos) {
-
+                        DatosAPIFragment frag = new DatosAPIFragment(datos);
+                        frag.show(getActivity().getSupportFragmentManager(), DatosAPIFragment.class.getCanonicalName());
                     }
                 }, false);
 
