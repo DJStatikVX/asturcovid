@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +33,11 @@ public class AreaSanitariaDataSource {
      */
     private final String[] allColumns = { MyDBHelper.COLUMNA_ID_AREAS_SANITARIAS, MyDBHelper.COLUMNA_NOMBRE_AREA_AREAS_SANITARIAS,
             MyDBHelper.COLUMNA_NOMBRE_HOSPITAL_AREAS_SANITARIAS, MyDBHelper.COLUMNA_DIRECCION_HOSPITAL_AREAS_SANITARIAS,
-            MyDBHelper.COLUMNA_TELEFONO_AREA_AREAS_SANITARIAS, MyDBHelper.COLUMNA_CASOS_TOTALES_AREAS_SANITARIAS,
-            MyDBHelper.COLUMNA_CASOS_HOY_AREAS_SANITARIAS, MyDBHelper.COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS, MyDBHelper.COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS,
+            MyDBHelper.COLUMNA_TELEFONO_AREA_AREAS_SANITARIAS,
+            MyDBHelper.COLUMNA_PRUEBAS0_AREAS_SANITARIAS,MyDBHelper.COLUMNA_PRUEBAS1_AREAS_SANITARIAS,MyDBHelper.COLUMNA_PRUEBAS2_AREAS_SANITARIAS,MyDBHelper.COLUMNA_PRUEBAS3_AREAS_SANITARIAS,MyDBHelper.COLUMNA_PRUEBAS4_AREAS_SANITARIAS,MyDBHelper.COLUMNA_PRUEBAS5_AREAS_SANITARIAS,MyDBHelper.COLUMNA_PRUEBAS6_AREAS_SANITARIAS,
+            MyDBHelper.COLUMNA_CASOS0_AREAS_SANITARIAS, MyDBHelper.COLUMNA_CASOS1_AREAS_SANITARIAS,MyDBHelper.COLUMNA_CASOS2_AREAS_SANITARIAS,MyDBHelper.COLUMNA_CASOS3_AREAS_SANITARIAS,MyDBHelper.COLUMNA_CASOS4_AREAS_SANITARIAS,MyDBHelper.COLUMNA_CASOS5_AREAS_SANITARIAS, MyDBHelper.COLUMNA_CASOS6_AREAS_SANITARIAS,
+            MyDBHelper.COLUMNA_MUERTES0_AREAS_SANITARIAS, MyDBHelper.COLUMNA_MUERTES1_AREAS_SANITARIAS, MyDBHelper.COLUMNA_MUERTES2_AREAS_SANITARIAS, MyDBHelper.COLUMNA_MUERTES3_AREAS_SANITARIAS, MyDBHelper.COLUMNA_MUERTES4_AREAS_SANITARIAS, MyDBHelper.COLUMNA_MUERTES5_AREAS_SANITARIAS, MyDBHelper.COLUMNA_MUERTES6_AREAS_SANITARIAS,
+            MyDBHelper.COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS, MyDBHelper.COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS,
             MyDBHelper.COLUMNA_LATITUD_HOSPITAL_AREAS_SANITARIAS, MyDBHelper.COLUMNA_LONGITUD_HOSPITAL_AREAS_SANITARIAS
     };
 
@@ -75,8 +80,27 @@ public class AreaSanitariaDataSource {
         values.put(MyDBHelper.COLUMNA_NOMBRE_HOSPITAL_AREAS_SANITARIAS, areaSanitariaToInsert.getHospital().getNombre_hospital());
         values.put(MyDBHelper.COLUMNA_DIRECCION_HOSPITAL_AREAS_SANITARIAS, areaSanitariaToInsert.getHospital().getDireccion_hospital());
         values.put(MyDBHelper.COLUMNA_TELEFONO_AREA_AREAS_SANITARIAS, areaSanitariaToInsert.getHospital().getTelefono());
-        values.put(MyDBHelper.COLUMNA_CASOS_TOTALES_AREAS_SANITARIAS, areaSanitariaToInsert.getCasos_totales());
-        values.put(MyDBHelper.COLUMNA_CASOS_HOY_AREAS_SANITARIAS, areaSanitariaToInsert.getCasos_hoy());
+        values.put(MyDBHelper.COLUMNA_PRUEBAS0_AREAS_SANITARIAS, areaSanitariaToInsert.getListaPruebas().get(0));
+        values.put(MyDBHelper.COLUMNA_PRUEBAS1_AREAS_SANITARIAS, areaSanitariaToInsert.getListaPruebas().get(1));
+        values.put(MyDBHelper.COLUMNA_PRUEBAS2_AREAS_SANITARIAS, areaSanitariaToInsert.getListaPruebas().get(2));
+        values.put(MyDBHelper.COLUMNA_PRUEBAS3_AREAS_SANITARIAS, areaSanitariaToInsert.getListaPruebas().get(3));
+        values.put(MyDBHelper.COLUMNA_PRUEBAS4_AREAS_SANITARIAS, areaSanitariaToInsert.getListaPruebas().get(4));
+        values.put(MyDBHelper.COLUMNA_PRUEBAS5_AREAS_SANITARIAS, areaSanitariaToInsert.getListaPruebas().get(5));
+        values.put(MyDBHelper.COLUMNA_PRUEBAS6_AREAS_SANITARIAS, areaSanitariaToInsert.getListaPruebas().get(6));
+        values.put(MyDBHelper.COLUMNA_CASOS0_AREAS_SANITARIAS, areaSanitariaToInsert.getListaCasos().get(0));
+        values.put(MyDBHelper.COLUMNA_CASOS1_AREAS_SANITARIAS, areaSanitariaToInsert.getListaCasos().get(1));
+        values.put(MyDBHelper.COLUMNA_CASOS2_AREAS_SANITARIAS, areaSanitariaToInsert.getListaCasos().get(2));
+        values.put(MyDBHelper.COLUMNA_CASOS3_AREAS_SANITARIAS, areaSanitariaToInsert.getListaCasos().get(3));
+        values.put(MyDBHelper.COLUMNA_CASOS4_AREAS_SANITARIAS, areaSanitariaToInsert.getListaCasos().get(4));
+        values.put(MyDBHelper.COLUMNA_CASOS5_AREAS_SANITARIAS, areaSanitariaToInsert.getListaCasos().get(5));
+        values.put(MyDBHelper.COLUMNA_CASOS6_AREAS_SANITARIAS, areaSanitariaToInsert.getListaCasos().get(6));
+        values.put(MyDBHelper.COLUMNA_MUERTES0_AREAS_SANITARIAS, areaSanitariaToInsert.getListaMuertes().get(0));
+        values.put(MyDBHelper.COLUMNA_MUERTES1_AREAS_SANITARIAS, areaSanitariaToInsert.getListaMuertes().get(1));
+        values.put(MyDBHelper.COLUMNA_MUERTES2_AREAS_SANITARIAS, areaSanitariaToInsert.getListaMuertes().get(2));
+        values.put(MyDBHelper.COLUMNA_MUERTES3_AREAS_SANITARIAS, areaSanitariaToInsert.getListaMuertes().get(3));
+        values.put(MyDBHelper.COLUMNA_MUERTES4_AREAS_SANITARIAS, areaSanitariaToInsert.getListaMuertes().get(4));
+        values.put(MyDBHelper.COLUMNA_MUERTES5_AREAS_SANITARIAS, areaSanitariaToInsert.getListaMuertes().get(5));
+        values.put(MyDBHelper.COLUMNA_MUERTES6_AREAS_SANITARIAS, areaSanitariaToInsert.getListaMuertes().get(6));
         values.put(MyDBHelper.COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS, areaSanitariaToInsert.getHospital().getImagen_hospital());
         values.put(MyDBHelper.COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS, areaSanitariaToInsert.getHospital().getWeb_hospital());
         values.put(MyDBHelper.COLUMNA_LATITUD_HOSPITAL_AREAS_SANITARIAS,areaSanitariaToInsert.getHospital().getLatitud());
@@ -102,20 +126,7 @@ public class AreaSanitariaDataSource {
                 null, null, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            final AreaSanitaria areaSanitaria = new AreaSanitaria();
-            areaSanitaria.setId(cursor.getInt(0));
-            areaSanitaria.setNombre_area(cursor.getString(1));
-            String nombre = cursor.getString(2);
-            String ubicacion = cursor.getString(3);
-            Long telefono = cursor.getLong(4);
-            areaSanitaria.setCasos_totales(cursor.getInt(5));
-            areaSanitaria.setCasos_hoy(cursor.getInt(6));
-            String imagen = cursor.getString(7);
-            String web_hospital = cursor.getString(8);
-            double latitud = cursor.getDouble(9);
-            double longitud = cursor.getDouble(10);
-
-            areaSanitaria.setHospital(new Hospital(nombre,telefono,ubicacion, imagen, web_hospital,latitud,longitud));
+            final AreaSanitaria areaSanitaria = crearAreaSanitaria(cursor);
 
             areaSanitariaList.add(areaSanitaria);
             cursor.moveToNext();
@@ -134,26 +145,47 @@ public class AreaSanitariaDataSource {
      * @return Área Sanitaria
      */
     public AreaSanitaria getAreaSanitaria(int id) {
-        AreaSanitaria areaSanitaria = new AreaSanitaria();
         Cursor cursor = database.rawQuery("SELECT * FROM TABLA_AREAS_SANITARIAS WHERE ID_AREA = ?", null);
         cursor.moveToFirst();
 
+        final AreaSanitaria areaSanitaria = crearAreaSanitaria(cursor);
+
+        cursor.close();
+
+        return areaSanitaria;
+    }
+
+    @NotNull
+    private AreaSanitaria crearAreaSanitaria(Cursor cursor) {
+        final AreaSanitaria areaSanitaria = new AreaSanitaria();
         areaSanitaria.setId(cursor.getInt(0));
         areaSanitaria.setNombre_area(cursor.getString(1));
         String nombre = cursor.getString(2);
         String ubicacion = cursor.getString(3);
         Long telefono = cursor.getLong(4);
-        areaSanitaria.setCasos_totales(cursor.getInt(5));
-        areaSanitaria.setCasos_hoy(cursor.getInt(6));
-        String imagen = cursor.getString(7);
-        String web_hospital = cursor.getString(8);
-        double latitud = cursor.getDouble(9);
-        double longitud = cursor.getDouble(10);
+
+        List<Integer> listaPruebas = new ArrayList<>();
+        List<Integer> listaCasos = new ArrayList<>();
+        List<Integer> listaMuertes = new ArrayList<>();
+        for (int i=5; i<26; i++){
+            if(i < 12){
+                listaPruebas.add(cursor.getInt(i));
+            }else if(i >= 19){
+                listaMuertes.add(cursor.getInt(i));
+            }else{
+                listaCasos.add(cursor.getInt(i));
+            }
+        }
+        areaSanitaria.setListaPruebas(listaPruebas);
+        areaSanitaria.setListaCasos(listaCasos);
+        areaSanitaria.setListaMuertes(listaMuertes);
+
+        String imagen = cursor.getString(26);
+        String web_hospital = cursor.getString(27);
+        double latitud = cursor.getDouble(28);
+        double longitud = cursor.getDouble(29);
 
         areaSanitaria.setHospital(new Hospital(nombre,telefono,ubicacion, imagen, web_hospital,latitud,longitud));
-
-        cursor.close();
-
         return areaSanitaria;
     }
 }

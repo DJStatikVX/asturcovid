@@ -557,7 +557,7 @@ public class MainActivity extends AppCompatActivity {
             //Leemos la primera línea que es encabezado y por tanto no nos aporta información útil.
             line = bufferedReader.readLine();
             String[] data = line.split(";");
-            fecha = data[9];
+            fecha = data[28];
 
             boolean hayDatosNuevos = false;
 
@@ -593,15 +593,31 @@ public class MainActivity extends AppCompatActivity {
                         String nombre_hospital = data[2];
                         String ubicacion = data[3];
                         long telefono = Long.parseLong(data[4]);
-                        int casos_total = Integer.parseInt(data[5]);
-                        int casos_hoy = Integer.parseInt(data[6]);
-                        String imagen_hospital = data[7];
-                        String web_hospital = data[8];
-                        double latitud = Double.parseDouble(data[9]);
-                        double longitud = Double.parseDouble(data[10]);
+
+                        List<Integer> listaPruebas = new ArrayList<>();
+                        List<Integer> listaCasos = new ArrayList<>();
+                        List<Integer> listaMuertes = new ArrayList<>();
+                        for (int i=5; i<26; i++){
+                            if(i < 12){
+                                listaPruebas.add(Integer.parseInt(data[i]));
+                            }else if(i >= 19){
+                                listaMuertes.add(Integer.parseInt(data[i]));
+                            }else{
+                                listaCasos.add(Integer.parseInt(data[i]));
+                            }
+                        }
+
+                        String imagen_hospital = data[26];
+                        String web_hospital = data[27];
+                        double latitud = Double.parseDouble(data[28]);
+                        double longitud = Double.parseDouble(data[29]);
                         Hospital hospital = new Hospital(nombre_hospital, telefono, ubicacion, imagen_hospital, web_hospital, latitud, longitud);
 
-                        area = new AreaSanitaria(id, nombre_area, hospital, casos_total, casos_hoy);
+                        area = new AreaSanitaria(id, nombre_area, hospital);
+
+                        area.setListaPruebas(listaPruebas);
+                        area.setListaCasos(listaCasos);
+                        area.setListaMuertes(listaMuertes);
 
                         Log.d("cargarAreasSanitarias", area.toString());
 

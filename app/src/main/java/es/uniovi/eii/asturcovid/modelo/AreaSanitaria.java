@@ -3,31 +3,37 @@ package es.uniovi.eii.asturcovid.modelo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AreaSanitaria implements Parcelable {
 
     private int id;
     private String nombre_area;
     private Hospital hospital;
-    private int casos_totales;
-    private int casos_hoy;
     private int numero_incidencia;
+    private List<Integer> listaPruebas;
+    private List<Integer> listaCasos;
+    private List<Integer> listaMuertes;
 
     public AreaSanitaria(){}
 
-    public AreaSanitaria(int id, String nombre_area, Hospital hospital, int casos_totales, int casos_hoy) {
+    public AreaSanitaria(int id, String nombre_area, Hospital hospital) {
         this.id = id;
         this.nombre_area = nombre_area;
         this.hospital = hospital;
-        this.casos_totales = casos_totales;
-        this.casos_hoy = casos_hoy;
+        listaPruebas = new ArrayList<>();
+        listaCasos = new ArrayList<>();
+        listaMuertes = new ArrayList<>();
     }
 
     protected AreaSanitaria(Parcel in) {
         id = in.readInt();
         nombre_area = in.readString();
         hospital = in.readParcelable(Hospital.class.getClassLoader());
-        casos_totales = in.readInt();
-        casos_hoy = in.readInt();
+        listaPruebas = in.readArrayList(Integer.class.getClassLoader());
+        listaCasos = in.readArrayList(Integer.class.getClassLoader());
+        listaMuertes = in.readArrayList(Integer.class.getClassLoader());
     }
 
     public int getId() {
@@ -42,12 +48,16 @@ public class AreaSanitaria implements Parcelable {
         return hospital;
     }
 
-    public int getCasos_totales() {
-        return casos_totales;
+    public List<Integer> getListaPruebas() {
+        return listaPruebas;
     }
 
-    public int getCasos_hoy() {
-        return casos_hoy;
+    public List<Integer> getListaCasos() {
+        return listaCasos;
+    }
+
+    public List<Integer> getListaMuertes() {
+        return listaMuertes;
     }
 
     @Override
@@ -55,8 +65,9 @@ public class AreaSanitaria implements Parcelable {
         dest.writeInt(id);
         dest.writeString(nombre_area);
         dest.writeParcelable(hospital, flags);
-        dest.writeInt(casos_totales);
-        dest.writeInt(casos_hoy);
+        dest.writeList(listaPruebas);
+        dest.writeList(listaCasos);
+        dest.writeList(listaMuertes);
     }
 
     @Override
@@ -88,19 +99,31 @@ public class AreaSanitaria implements Parcelable {
         this.hospital = hospital;
     }
 
-    public void setCasos_totales(int casos_totales) {
-        this.casos_totales = casos_totales;
-    }
-
-    public void setCasos_hoy(int casos_hoy) {
-        this.casos_hoy = casos_hoy;
-    }
-
     public int getNumero_incidencia() {
         return numero_incidencia;
     }
 
     public void setNumero_incidencia(int numero_incidencia) {
         this.numero_incidencia = numero_incidencia;
+    }
+
+    public void setListaPruebas(List<Integer> listaPruebas) {
+        this.listaPruebas = listaPruebas;
+    }
+
+    public void setListaCasos(List<Integer> listaCasos) {
+        this.listaCasos = listaCasos;
+    }
+
+    public void setListaMuertes(List<Integer> listaMuertes) {
+        this.listaMuertes = listaMuertes;
+    }
+
+    public int getCasosTotales() {
+        int casos_totales = 0;
+        for(int i=0; i < this.getListaCasos().size(); i++){
+            casos_totales += this.getListaCasos().get(i);
+        }
+        return casos_totales;
     }
 }

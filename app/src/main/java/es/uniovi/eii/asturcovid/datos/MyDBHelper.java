@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class MyDBHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "AsturCovid.db";
+    private static final String DATABASE_NAME = "AsturCOVID.db";
     private static final int DATABASE_VERSION = 1;
 
     // Tablas
@@ -22,12 +22,32 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public static final String COLUMNA_NOMBRE_HOSPITAL_AREAS_SANITARIAS = "nombre_hospital";
     public static final String COLUMNA_DIRECCION_HOSPITAL_AREAS_SANITARIAS = "direccion_hospital";
     public static final String COLUMNA_TELEFONO_AREA_AREAS_SANITARIAS = "telefono";
-    public static final String COLUMNA_CASOS_TOTALES_AREAS_SANITARIAS = "casos_totales";
-    public static final String COLUMNA_CASOS_HOY_AREAS_SANITARIAS = "casos_hoy";
+    public static final String COLUMNA_PRUEBAS0_AREAS_SANITARIAS = "pruebas0";
+    public static final String COLUMNA_PRUEBAS1_AREAS_SANITARIAS = "pruebas1";
+    public static final String COLUMNA_PRUEBAS2_AREAS_SANITARIAS = "pruebas2";
+    public static final String COLUMNA_PRUEBAS3_AREAS_SANITARIAS = "pruebas3";
+    public static final String COLUMNA_PRUEBAS4_AREAS_SANITARIAS = "pruebas4";
+    public static final String COLUMNA_PRUEBAS5_AREAS_SANITARIAS = "pruebas5";
+    public static final String COLUMNA_PRUEBAS6_AREAS_SANITARIAS = "pruebas6";
+    public static final String COLUMNA_CASOS0_AREAS_SANITARIAS = "casos0";
+    public static final String COLUMNA_CASOS1_AREAS_SANITARIAS = "casos1";
+    public static final String COLUMNA_CASOS2_AREAS_SANITARIAS = "casos2";
+    public static final String COLUMNA_CASOS3_AREAS_SANITARIAS = "casos3";
+    public static final String COLUMNA_CASOS4_AREAS_SANITARIAS = "casos4";
+    public static final String COLUMNA_CASOS5_AREAS_SANITARIAS = "casos5";
+    public static final String COLUMNA_CASOS6_AREAS_SANITARIAS = "casos6";
+    public static final String COLUMNA_MUERTES0_AREAS_SANITARIAS = "muertes0";
+    public static final String COLUMNA_MUERTES1_AREAS_SANITARIAS = "muertes1";
+    public static final String COLUMNA_MUERTES2_AREAS_SANITARIAS = "muertes2";
+    public static final String COLUMNA_MUERTES3_AREAS_SANITARIAS = "muertes3";
+    public static final String COLUMNA_MUERTES4_AREAS_SANITARIAS = "muertes4";
+    public static final String COLUMNA_MUERTES5_AREAS_SANITARIAS = "muertes5";
+    public static final String COLUMNA_MUERTES6_AREAS_SANITARIAS = "muertes6";
     public static final String COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS = "imagen_hospital";
     public static final String COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS = "web_hospital";
     public static final String COLUMNA_LATITUD_HOSPITAL_AREAS_SANITARIAS = "latitud_hospital";
     public static final String COLUMNA_LONGITUD_HOSPITAL_AREAS_SANITARIAS = "longitud_hospital";
+
 
     public static final String COLUMNA_FECHA_ULTIMA_ACTUALIZACION = "fecha_ultima_actualizacion";
 
@@ -41,8 +61,27 @@ public class MyDBHelper extends SQLiteOpenHelper {
             COLUMNA_NOMBRE_HOSPITAL_AREAS_SANITARIAS + " text not null, " +
             COLUMNA_DIRECCION_HOSPITAL_AREAS_SANITARIAS + " text, " +
             COLUMNA_TELEFONO_AREA_AREAS_SANITARIAS + " long, " +
-            COLUMNA_CASOS_TOTALES_AREAS_SANITARIAS + "  integer not null, " +
-            COLUMNA_CASOS_HOY_AREAS_SANITARIAS + " integer not null," +
+            COLUMNA_PRUEBAS0_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_PRUEBAS1_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_PRUEBAS2_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_PRUEBAS3_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_PRUEBAS4_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_PRUEBAS5_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_PRUEBAS6_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_CASOS0_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_CASOS1_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_CASOS2_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_CASOS3_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_CASOS4_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_CASOS5_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_CASOS6_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_MUERTES0_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_MUERTES1_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_MUERTES2_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_MUERTES3_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_MUERTES4_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_MUERTES5_AREAS_SANITARIAS + "  integer not null, " +
+            COLUMNA_MUERTES6_AREAS_SANITARIAS + "  integer not null, " +
             COLUMNA_IMAGEN_HOSPITAL_AREAS_SANITARIAS + " text not null," +
             COLUMNA_WEB_HOSPITAL_AREAS_SANITARIAS + " text not null," +
             COLUMNA_LATITUD_HOSPITAL_AREAS_SANITARIAS + " double not null," +

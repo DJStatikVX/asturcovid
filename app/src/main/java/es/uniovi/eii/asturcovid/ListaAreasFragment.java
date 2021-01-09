@@ -122,7 +122,7 @@ public class ListaAreasFragment extends Fragment {
         //Calculo maximo casos totales
         int max = 0;
         for (AreaSanitaria a : listaAreasSanitarias) {
-            int casos_totales = a.getCasos_totales();
+            int casos_totales = a.getCasosTotales();
             if (casos_totales > max) {
                 max = casos_totales;
             }
@@ -130,7 +130,7 @@ public class ListaAreasFragment extends Fragment {
 
         //Calcular nivel de incidencia de cada area
         for (AreaSanitaria a : listaAreasSanitarias) {
-            double valor = (a.getCasos_totales()*1.0)/max;
+            double valor = (a.getCasosTotales()*1.0)/max;
             if(valor >= 0 && valor <= 0.33){
                 a.setNumero_incidencia(0);
             }else if(valor > 0.33 && valor <= 0.66){

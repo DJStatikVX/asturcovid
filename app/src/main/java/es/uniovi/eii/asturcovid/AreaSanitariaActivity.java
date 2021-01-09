@@ -115,8 +115,8 @@ public class AreaSanitariaActivity extends AppCompatActivity {
             nombre_hospital.setText(area.getHospital().getNombre_hospital());
             ubicacion_hospital.setText(area.getHospital().getDireccion_hospital());
             telefono_hospital.setText("" + (long) area.getHospital().getTelefono());
-            casos_totales.setText("" + (int) area.getCasos_totales());
-            casos_hoy.setText("" + (int) area.getCasos_hoy());
+            casos_totales.setText("" + (int) area.getCasosTotales());
+            casos_hoy.setText("" + (int) area.getListaCasos().get(6));
             txtDatosActualizados.setText("Datos actualizados a " + fechaActualizacion);
 
             String url = area.getHospital().getImagen_hospital();
