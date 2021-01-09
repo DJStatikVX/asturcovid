@@ -50,4 +50,6 @@
     <string name="numero_hospitalizados">34</string>
     <string name="numero_recuperados">286</string>
     <string name="fuente_datos">Fuente: API COVID-19 Narrativa</string>
+    <string name="numero_uci">17</string>
+    <string name="numero_casos_abiertos">321</string>
 </resources>
