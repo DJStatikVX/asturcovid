@@ -43,8 +43,8 @@
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="241dp"
-        android:layout_height="194dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:background="@drawable/borde"
         app:columnCount="2"
