@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:orientation="vertical"
-        android:descendantFocusability="blocksDescendants">
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -23,7 +23,7 @@
 
             <LinearLayout
                 android:layout_width="275sp"
-                android:layout_height="250sp"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:orientation="vertical">
 
@@ -59,6 +59,15 @@
                     android:padding="8sp"
                     android:text="@string/telefono"
                     android:textSize="18sp" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChartAreaSanitaria_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -78,7 +87,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_datos_area_sanitaria"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="400sp"></androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 
