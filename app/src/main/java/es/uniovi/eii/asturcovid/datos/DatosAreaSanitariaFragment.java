@@ -1,4 +1,4 @@
-package es.uniovi.eii.asturcovid;
+package es.uniovi.eii.asturcovid.datos;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import es.uniovi.eii.asturcovid.R;
 import es.uniovi.eii.asturcovid.datos.DatosAreaSanitariaCovidFecha;
 
 public class DatosAreaSanitariaFragment extends DialogFragment {

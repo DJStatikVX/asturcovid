@@ -1,4 +1,4 @@
-package es.uniovi.eii.asturcovid;
+package es.uniovi.eii.asturcovid.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import es.uniovi.eii.asturcovid.R;
 import es.uniovi.eii.asturcovid.datos.DatosAreaSanitariaCovidFecha;
 
 public class ListaDatosAreaSanitariaAdapter extends RecyclerView.Adapter<ListaDatosAreaSanitariaAdapter.ListaDatosAreaSanitariaCovidFechaViewHolder> {

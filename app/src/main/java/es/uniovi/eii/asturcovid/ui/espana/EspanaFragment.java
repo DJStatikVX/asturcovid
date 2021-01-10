@@ -26,9 +26,9 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.uniovi.eii.asturcovid.DatosAPIFragment;
-import es.uniovi.eii.asturcovid.ListaDatosCovidFechaAdapter;
-import es.uniovi.eii.asturcovid.MainActivity;
+import es.uniovi.eii.asturcovid.datos.DatosAPIFragment;
+import es.uniovi.eii.asturcovid.adapter.ListaDatosCovidFechaAdapter;
+import es.uniovi.eii.asturcovid.ui.MainActivity;
 import es.uniovi.eii.asturcovid.R;
 import es.uniovi.eii.asturcovid.datos.DatosCovidFecha;
 

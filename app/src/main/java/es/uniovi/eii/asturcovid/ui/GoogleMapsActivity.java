@@ -1,4 +1,4 @@
-package es.uniovi.eii.asturcovid;
+package es.uniovi.eii.asturcovid.ui;
 
 // Copyright 2020 Google LLC
 //
@@ -30,9 +30,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import es.uniovi.eii.asturcovid.R;
 import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
 
-import static es.uniovi.eii.asturcovid.MainActivity.AREA_SANITARIA_SELECCIONADA;
+import static es.uniovi.eii.asturcovid.ui.MainActivity.AREA_SANITARIA_SELECCIONADA;
 
 /**
  * An activity that displays a Google map with a marker (pin) to indicate a particular location.

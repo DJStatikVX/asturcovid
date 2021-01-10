@@ -6,23 +6,16 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
-import es.uniovi.eii.asturcovid.ListaAreasFragment;
-import es.uniovi.eii.asturcovid.MainActivity;
-import es.uniovi.eii.asturcovid.MapaFragment;
 import es.uniovi.eii.asturcovid.R;
 
 public class AreasFragment extends Fragment {

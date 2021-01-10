@@ -1,4 +1,4 @@
-package es.uniovi.eii.asturcovid;
+package es.uniovi.eii.asturcovid.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

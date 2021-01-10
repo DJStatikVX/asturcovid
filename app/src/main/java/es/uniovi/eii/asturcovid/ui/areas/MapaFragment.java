@@ -1,4 +1,4 @@
-package es.uniovi.eii.asturcovid;
+package es.uniovi.eii.asturcovid.ui.areas;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import es.uniovi.eii.asturcovid.R;
 import es.uniovi.eii.asturcovid.datos.AreaSanitariaDataSource;
 import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
 

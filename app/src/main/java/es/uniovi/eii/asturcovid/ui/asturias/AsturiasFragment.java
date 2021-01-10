@@ -1,8 +1,6 @@
 package es.uniovi.eii.asturcovid.ui.asturias;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +26,11 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.uniovi.eii.asturcovid.AreaSanitariaActivity;
-import es.uniovi.eii.asturcovid.DatosAPIFragment;
-import es.uniovi.eii.asturcovid.ListaAreaSanitariaAdapter;
-import es.uniovi.eii.asturcovid.ListaDatosCovidFechaAdapter;
-import es.uniovi.eii.asturcovid.MainActivity;
+import es.uniovi.eii.asturcovid.datos.DatosAPIFragment;
+import es.uniovi.eii.asturcovid.adapter.ListaDatosCovidFechaAdapter;
+import es.uniovi.eii.asturcovid.ui.MainActivity;
 import es.uniovi.eii.asturcovid.R;
 import es.uniovi.eii.asturcovid.datos.DatosCovidFecha;
-import es.uniovi.eii.asturcovid.modelo.AreaSanitaria;
-
-import static es.uniovi.eii.asturcovid.MainActivity.AREA_SANITARIA_SELECCIONADA;
-import static es.uniovi.eii.asturcovid.MainActivity.FECHA_ACTUALIZACION;
 
 public class AsturiasFragment extends Fragment {
     private BarChart barChart;

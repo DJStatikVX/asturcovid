@@ -1,4 +1,4 @@
-package es.uniovi.eii.asturcovid;
+package es.uniovi.eii.asturcovid.datos;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import es.uniovi.eii.asturcovid.R;
 import es.uniovi.eii.asturcovid.datos.DatosCovidFecha;
 
 public class DatosAPIFragment extends DialogFragment {
