@@ -105,7 +105,9 @@ public class AsturiasFragment extends Fragment {
             for (String dia : fechas) {
                 dias.add(dia);
             }
-            String[] labels = new String[]{dias.get(0), dias.get(1), dias.get(2), dias.get(3), dias.get(4), dias.get(5), dias.get(6)};
+            String[] labels = new String[]{dias.get(0).substring(5), dias.get(1).substring(5),
+                    dias.get(2).substring(5), dias.get(3).substring(5), dias.get(4).substring(5),
+                    dias.get(5).substring(5), dias.get(6).substring(5)};
 
             // fit the data into a bar
             for (int i = 0; i < valueList.size(); i++) {
