@@ -36,18 +36,6 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
-/*    @Override
-    protected void onPause() {
-        super.onPause();
-
-        sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        name = sharedPreferences.getString("keyCategoria", "");
-        Log.i("ID", name);
-
-        MainActivity.areaPreferida = name;
-    }*/
-
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

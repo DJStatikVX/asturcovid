@@ -47,7 +47,6 @@ public class ListaAreaSanitariaAdapter extends RecyclerView.Adapter<ListaAreaSan
     public void onBindViewHolder(@NonNull AreaSanitariaViewHolder holder, int position) {
         // Extrae de la lista el elemento indicado por posición
         AreaSanitaria area = listaAreasSanitarias.get(position);
-        Log.i("Lista","Visualiza elemento: " + area);
         // llama al método de nuestro holder para asignar valores a los componentes
         // además, pasamos el listener del evento onClick
         holder.bindUser(area, listener);

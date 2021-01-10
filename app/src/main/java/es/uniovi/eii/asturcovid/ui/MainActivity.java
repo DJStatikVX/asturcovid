@@ -534,22 +534,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cargando);
 
+        // Cargar datos de áreas sanitarias
         DownloadFilesTask task = new DownloadFilesTask();
         task.execute();
 
+        // Cargar datos de Asturias (API)
         DownloadAsturiasDataTask taskAsturias = new DownloadAsturiasDataTask();
         taskAsturias.execute();
 
+        // Cargar datos de España (API)
         DownloadEspanaDataTask taskEspana = new DownloadEspanaDataTask();
         taskEspana.execute();
-
-
-/*        AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
-        dataSource.open();
-
-        listaAreasSanitarias = dataSource.getAllValorations();
-
-        dataSource.close();*/
     }
 
     protected void cargarView() {
@@ -593,8 +588,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
-
-        //private List<Fragment> fragments = new ArrayList<>();
         private int numeroDeElementos;
         private String[] titulos = new String[]{"Mapa", "Lista Áreas"};
 
@@ -603,10 +596,6 @@ public class MainActivity extends AppCompatActivity {
             numeroDeElementos = behavior;
         }
 
-        /*public void addFragment(Fragment fragment, String title){
-            fragments.add(fragment);
-            fragmentTitles.add(title);
-        }*/
         @Override
         public CharSequence getPageTitle(int position) {
             return titulos[position];
@@ -640,40 +629,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        // Recuperar los ajustes del usuario
         sharedPreferencesMainActivity =
                 PreferenceManager.getDefaultSharedPreferences(this);
         areaPreferida = sharedPreferencesMainActivity.getString("keyAreaSanitaria", "");
-
-        /*viewPager = findViewById(R.id.view_pager);
-        tabLayout = findViewById(R.id.tab_layout);
-
-        mapa = findViewById(R.id.tabitem_mapa);
-        listaAreas = findViewById(R.id.tabitem_listaAreas);
-
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-
-        final ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        //mapaFragment = new MapaFragment();
-        viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));*/
     }
 
     @Override
@@ -683,6 +642,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Opciones del menú
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -698,6 +662,12 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Acción a realizar al volver de SettingsActivity
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -726,9 +696,6 @@ public class MainActivity extends AppCompatActivity {
     public void clickOnItem(View v) {
         int id_area = Integer.parseInt(v.getTag().toString());
         AreaSanitaria area = listaAreasSanitarias.get(id_area - 1);
-
-        Log.i("Click adapter", "Item Clicked: " + id_area);
-
         Intent intent = new Intent(MainActivity.this, AreaSanitariaActivity.class);
         intent.putExtra(AREA_SANITARIA_SELECCIONADA, area);
         intent.putExtra(FECHA_ACTUALIZACION, fecha);
@@ -752,7 +719,6 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
         alert.setTitle("Cálculo de incidencia por áreas");
         alert.setIcon(R.drawable.ayuda);
-
         alert.setMessage(Html.fromHtml("La incidencia de un área se calcula a partir de la <b>normalización</b> de los datos con respecto al mayor número de casos en la última semana.<br><br>De esta manera:<br>" +
                 "<ul> <li> Incidencia <b>< 33%</b>: Marcador <b><font color='#006400'>verde</font></b></li>  <li> <b>33%</b> < Incidencia < <b>66%</b>: Marcador <b><font color='#FFD500'>amarillo</font></b></li>  <li> <b>66%</b> < Incidencia: Marcador <b><font color='#FF0000'>rojo</font></b></li> </ul>", Html.FROM_HTML_MODE_LEGACY));
         alert.setPositiveButton("OK", null);
