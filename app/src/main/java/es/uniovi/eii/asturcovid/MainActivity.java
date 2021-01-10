@@ -2,9 +2,11 @@ package es.uniovi.eii.asturcovid;
 
 import android.app.ActivityOptions;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,7 +15,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabItem;
@@ -79,6 +84,33 @@ public class MainActivity extends AppCompatActivity {
      */
     private class DownloadFilesTask extends AsyncTask<Void, Integer, String> {
 
+        // Barra de progreso
+        private ProgressDialog progressDialog;
+
+        // Variables de cálculo de porcentaje de progreso
+        private float datosALeer = 240.0f;
+        float numeroDatosLeidos = 0.0f;
+
+        /**
+         * Método previo a la ejecución de la tarea asíncrona
+         */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // Establecemos las propiedades de la barra de progreso
+            this.progressDialog = new ProgressDialog(MainActivity.this);
+            this.progressDialog.setMessage("Recuperando información...");
+            this.progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            this.progressDialog.setCancelable(false);
+            this.progressDialog.show();
+        }
+
+        /**
+         * Tarea principal a ejecutar por la tarea asíncrona
+         * @param voids parámetros
+         * @return mensaje de carga correcta o incorrecta de datos
+         */
         @Override
         protected String doInBackground(Void... voids) {
             String mensaje;
@@ -91,6 +123,163 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return mensaje;
+        }
+
+        /**
+         * Método que va actualizando la barra de progreso
+         * @param values
+         */
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            progressDialog.setProgress(values[0]);
+        }
+
+        /**
+         * Tras finalizar la ejecución, se cierra el diálogo de progreso
+         * @param s
+         */
+        @Override
+        protected void onPostExecute(String s) {
+            this.progressDialog.dismiss();
+            cargarView();
+        }
+
+        private void cargarAreasSanitarias() {
+            AreaSanitaria area = null;
+            InputStream file = null;
+            InputStreamReader reader = null;
+            BufferedReader bufferedReader = null;
+
+            try {
+                URL url12 = new URL("https://www.dropbox.com/s/4d95qmhwktn0chj/areas_sanitarias.csv?dl=1");
+                URLConnection uc = url12.openConnection();
+
+                reader = new InputStreamReader(uc.getInputStream());
+                /////
+                //file = getAssets().open("areas_sanitarias.csv");
+                //reader = new InputStreamReader(file);
+                bufferedReader = new BufferedReader(reader);
+                String line = null;
+
+                //Leemos la primera línea que es encabezado y por tanto no nos aporta información útil.
+                line = bufferedReader.readLine();
+                String[] data = line.split(";");
+                fecha = data[28];
+                publishProgress(10);
+
+                boolean hayDatosNuevos = false;
+
+                FechaDataSource fechaDataSource = new FechaDataSource(getApplicationContext());
+                fechaDataSource.open();
+
+                String ultimaActualizacion = fechaDataSource.getFechaUltimaActualizacion();
+                publishProgress(20);
+                try {
+                    if (ultimaActualizacion == null) {
+                        hayDatosNuevos = true;
+                        ultimaActualizacion = fecha;
+                    } else {
+                        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+                        Date fechaAntigua = formateador.parse(ultimaActualizacion);
+                        Date fechaNueva = formateador.parse(fecha);
+
+                        hayDatosNuevos = fechaNueva.after(fechaAntigua);
+                    }
+
+                } catch (java.text.ParseException e) {
+                    Snackbar.make(findViewById(R.id.layout_principal), "Formato de datos corrupto. Por favor, reinstale la aplicación.", Snackbar.LENGTH_LONG).show();
+                }
+
+                if (hayDatosNuevos) {
+                    //Borramos los datos existentes en la base de datos para reemplazarlos por los nuevos
+                    vaciarBaseDatos();
+                    //A partir de aquí leemos a partir de la segunda línea.
+                    while ((line = bufferedReader.readLine()) != null) {
+                        data = line.split(";");
+                        if (data != null) { //El segundo condicional se va a cumplir siempre. Podemos quitarlo
+                            int id = Integer.parseInt(data[0]);
+                            numeroDatosLeidos++;
+                            publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            String nombre_area = data[1];
+                            numeroDatosLeidos++;
+                            publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            String nombre_hospital = data[2];
+                            numeroDatosLeidos++;
+                            publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            String ubicacion = data[3];
+                            numeroDatosLeidos++;
+                            publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            long telefono = Long.parseLong(data[4]);
+                            numeroDatosLeidos++;
+                            publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            List<Integer> listaPruebas = new ArrayList<>();
+                            List<Integer> listaCasos = new ArrayList<>();
+                            List<Integer> listaMuertes = new ArrayList<>();
+                            for (int i=5; i<26; i++){
+                                if(i < 12){
+                                    listaPruebas.add(Integer.parseInt(data[i]));
+                                }else if(i >= 19){
+                                    listaMuertes.add(Integer.parseInt(data[i]));
+                                }else{
+                                    listaCasos.add(Integer.parseInt(data[i]));
+                                }
+
+                                numeroDatosLeidos++;
+                                publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            }
+
+                            String imagen_hospital = data[26];
+                            numeroDatosLeidos++;
+                            publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            String web_hospital = data[27];
+                            numeroDatosLeidos++;
+                            publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            double latitud = Double.parseDouble(data[28]);
+                            numeroDatosLeidos++;
+                            publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            double longitud = Double.parseDouble(data[29]);
+                            numeroDatosLeidos++;
+                            publishProgress((int) ((numeroDatosLeidos / datosALeer) * 100));
+                            Hospital hospital = new Hospital(nombre_hospital, telefono, ubicacion, imagen_hospital, web_hospital, latitud, longitud);
+
+                            area = new AreaSanitaria(id, nombre_area, hospital);
+
+                            area.setListaPruebas(listaPruebas);
+                            area.setListaCasos(listaCasos);
+                            area.setListaMuertes(listaMuertes);
+
+                            Log.d("cargarAreasSanitarias", area.toString());
+
+                            //Ya no lo añadimos a la Lista de Películas, pasa antes por la base de datos donde queda almacenado.
+                            //  listaPeli.add(peli);
+                            //Metemos la película en la base de datos:
+                            AreaSanitariaDataSource areasSanitariasDataSource = new AreaSanitariaDataSource(getApplicationContext());
+                            areasSanitariasDataSource.open();
+                            areasSanitariasDataSource.createAreaSanitaria(area);
+                            areasSanitariasDataSource.close();
+                        }
+                    }
+                    //Refrescamos la ultima fecha de actualizacion
+                    fechaDataSource.insertarFechaUltimaActualizacion(ultimaActualizacion);
+                    publishProgress(100);
+                } else {
+                    publishProgress(40);
+                    publishProgress(60);
+                    publishProgress(80);
+                    publishProgress(100);
+                }
+                fechaDataSource.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (bufferedReader != null) {
+                    try {
+                        bufferedReader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 
@@ -358,6 +547,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cargando);
+
+        DownloadFilesTask task = new DownloadFilesTask();
+        task.execute();
+
+        DownloadAsturiasDataTask taskAsturias = new DownloadAsturiasDataTask();
+        taskAsturias.execute();
+
+        DownloadEspanaDataTask taskEspana = new DownloadEspanaDataTask();
+        taskEspana.execute();
+
+
+/*        AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
+        dataSource.open();
+
+        listaAreasSanitarias = dataSource.getAllValorations();
+
+        dataSource.close();*/
+    }
+
+    protected void cargarView() {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -372,22 +582,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-        DownloadFilesTask task = new DownloadFilesTask();
-        try {
-            task.execute().get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        DownloadAsturiasDataTask taskAsturias = new DownloadAsturiasDataTask();
-        taskAsturias.execute();
-
-        DownloadEspanaDataTask taskEspana = new DownloadEspanaDataTask();
-        taskEspana.execute();
-
 
         AreaSanitariaDataSource dataSource = new AreaSanitariaDataSource(getApplicationContext());
         dataSource.open();
@@ -535,116 +729,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    private void cargarAreasSanitarias() {
-        AreaSanitaria area = null;
-        InputStream file = null;
-        InputStreamReader reader = null;
-        BufferedReader bufferedReader = null;
-
-        try {
-            URL url12 = new URL("https://www.dropbox.com/s/4d95qmhwktn0chj/areas_sanitarias.csv?dl=1");
-            URLConnection uc = url12.openConnection();
-
-            reader = new InputStreamReader(uc.getInputStream());
-            /////
-            //file = getAssets().open("areas_sanitarias.csv");
-            //reader = new InputStreamReader(file);
-            bufferedReader = new BufferedReader(reader);
-            String line = null;
-
-            //Leemos la primera línea que es encabezado y por tanto no nos aporta información útil.
-            line = bufferedReader.readLine();
-            String[] data = line.split(";");
-            fecha = data[28];
-
-            boolean hayDatosNuevos = false;
-
-            FechaDataSource fechaDataSource = new FechaDataSource(getApplicationContext());
-            fechaDataSource.open();
-
-            String ultimaActualizacion = fechaDataSource.getFechaUltimaActualizacion();
-            try {
-                if (ultimaActualizacion == null) {
-                    hayDatosNuevos = true;
-                    ultimaActualizacion = fecha;
-                } else {
-                    SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-                    Date fechaAntigua = formateador.parse(ultimaActualizacion);
-                    Date fechaNueva = formateador.parse(fecha);
-
-                    hayDatosNuevos = fechaNueva.after(fechaAntigua);
-                }
-
-            } catch (java.text.ParseException e) {
-                Snackbar.make(findViewById(R.id.layout_principal), "Formato de datos corrupto. Por favor, reinstale la aplicación.", Snackbar.LENGTH_LONG).show();
-            }
-
-            if (hayDatosNuevos) {
-                //Borramos los datos existentes en la base de datos para reemplazarlos por los nuevos
-                vaciarBaseDatos();
-                //A partir de aquí leemos a partir de la segunda línea.
-                while ((line = bufferedReader.readLine()) != null) {
-                    data = line.split(";");
-                    if (data != null) { //El segundo condicional se va a cumplir siempre. Podemos quitarlo
-                        int id = Integer.parseInt(data[0]);
-                        String nombre_area = data[1];
-                        String nombre_hospital = data[2];
-                        String ubicacion = data[3];
-                        long telefono = Long.parseLong(data[4]);
-
-                        List<Integer> listaPruebas = new ArrayList<>();
-                        List<Integer> listaCasos = new ArrayList<>();
-                        List<Integer> listaMuertes = new ArrayList<>();
-                        for (int i=5; i<26; i++){
-                            if(i < 12){
-                                listaPruebas.add(Integer.parseInt(data[i]));
-                            }else if(i >= 19){
-                                listaMuertes.add(Integer.parseInt(data[i]));
-                            }else{
-                                listaCasos.add(Integer.parseInt(data[i]));
-                            }
-                        }
-
-                        String imagen_hospital = data[26];
-                        String web_hospital = data[27];
-                        double latitud = Double.parseDouble(data[28]);
-                        double longitud = Double.parseDouble(data[29]);
-                        Hospital hospital = new Hospital(nombre_hospital, telefono, ubicacion, imagen_hospital, web_hospital, latitud, longitud);
-
-                        area = new AreaSanitaria(id, nombre_area, hospital);
-
-                        area.setListaPruebas(listaPruebas);
-                        area.setListaCasos(listaCasos);
-                        area.setListaMuertes(listaMuertes);
-
-                        Log.d("cargarAreasSanitarias", area.toString());
-
-                        //Ya no lo añadimos a la Lista de Películas, pasa antes por la base de datos donde queda almacenado.
-                        //  listaPeli.add(peli);
-                        //Metemos la película en la base de datos:
-                        AreaSanitariaDataSource areasSanitariasDataSource = new AreaSanitariaDataSource(getApplicationContext());
-                        areasSanitariasDataSource.open();
-                        areasSanitariasDataSource.createAreaSanitaria(area);
-                        areasSanitariasDataSource.close();
-                    }
-                }
-                //Refrescamos la ultima fecha de actualizacion
-                fechaDataSource.insertarFechaUltimaActualizacion(ultimaActualizacion);
-            }
-            fechaDataSource.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     private void vaciarBaseDatos() {
