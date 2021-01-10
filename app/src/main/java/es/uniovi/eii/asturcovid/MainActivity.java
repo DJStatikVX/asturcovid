@@ -735,8 +735,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void mostrarAcercaDe() {
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-        alert.setTitle("AsturCOVID: Sprint 3");
-        alert.setMessage("Desarrollado por Samuel, Luis y Sofía.");
+        alert.setTitle("AsturCOVID V1.0");
+        alert.setMessage("Aplicación desarrollada por estudiantes de Software para Dispositivos Móviles.\n\n"
+                + "Esta aplicación utiliza información del Principado y de APIs externas para mostrar "
+                + "información relevante sobre el estado actual de la pandemia por COVID-19.\n\n"
+                + "Autores:\n· Samuel Rodríguez Ares\n· Luis Fernández Suárez\n· Sofía Suárez Fernández\n\n"
+                + "Curso 2020-21");
         alert.setPositiveButton("OK", null);
         alert.show();
     }
