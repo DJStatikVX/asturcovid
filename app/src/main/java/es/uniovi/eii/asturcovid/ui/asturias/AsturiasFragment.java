@@ -111,7 +111,7 @@ public class AsturiasFragment extends Fragment {
     }
 
     private void asociarDatosAFechas(List<String> fechas, List<List<Integer>> datos){
-        for (int i=0; i < 7; i++){
+        for (int i=6; i >= 0; i--){
             String fecha = fechas.get(i);
             int confirmados = datos.get(i).get(0);
             int fallecidos = datos.get(i).get(1);
