@@ -40,7 +40,7 @@ Here’s a sneak peek of the app in action:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/AsturCOVID.git
+   git clone https://github.com/DJStatikVX/asturcovid.git
    ```
 2. **Open the project in Android Studio.**
 
